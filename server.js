@@ -7,7 +7,7 @@ const methodOverride = require('method-override');
 const app = express();
 
 const db = require('./models');
-const { Projects, Schematics, } = require('./models');
+const { Comments, Images, Pins, Projects, Schematics, Users, User_role } = require('./models');
 
 const PORT = process.env.PORT || 3000;
 
