@@ -4,9 +4,9 @@ const Schematics = require('./Schematics');
 
 module.exports = function(sequelize, DataTypes) {
   var Projects = sequelize.define("Projects", {
-    title: DataTypes.TEXT,
-    address: DataTypes.TEXT,
-  },
+    title: { type: DataTypes.TEXT, allowNull: false},
+    address: { type: DataTypes.TEXT, allowNull: false}
+  });
 
   Projects.associate = function(models) {
 
@@ -18,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
         }
       });
 
-  });
+  };
 
   return Projects;
 };

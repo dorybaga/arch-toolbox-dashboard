@@ -1,6 +1,6 @@
 {
   "development": {
-    "username": "root",
+    "username": "admin",
     "password": null,
     "database": "foundation_database",
     "host": "127.0.0.1",

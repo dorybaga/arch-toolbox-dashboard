@@ -4,9 +4,9 @@ const User_role = require('./User_role');
 
 module.exports = function(sequelize, DataTypes) {
   var Users = sequelize.define("Users", {
-    email: DataTypes.TEXT,
-    password: DataTypes.TEXT
-  },
+    email: { type: DataTypes.TEXT, allowNull: false},
+    password: { type: DataTypes.TEXT, allowNull: false}
+  });
 
   Users.associate = function(models) {
 
@@ -18,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
         }
       });
 
-  });
+  };
 
   return Users;
 };

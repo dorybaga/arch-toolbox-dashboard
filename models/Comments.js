@@ -3,9 +3,10 @@ const Pins = require('./Pins');
 
 
 module.exports = function(sequelize, DataTypes) {
-  var Comments = sequelize.define("Comments", {
-    body: DataTypes.TEXT,
-  },
+  var Comments = sequelize.define("Comments",
+   {
+    body: { type: DataTypes.TEXT, allowNull: false}
+  });
 
   Comments.associate = function(models) {
 
@@ -17,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
         }
       });
 
-  });
+  };
 
   return Comments;
 };
