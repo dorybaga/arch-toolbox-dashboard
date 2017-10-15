@@ -17,7 +17,9 @@ app.use(bp.json());
 //app.use('/api', require('./api/index.js'));
 
 app.get("/projects", (req,res) => {
-   Projects.findAll()
+   Projects.findAll({
+    include: [{model: Schematics}]
+   })
       .then(project => {
         res.json(project);
       });
@@ -36,6 +38,18 @@ app.post("/projects", (req, res) => {
           console.log(err);
         });
     });
+
+
+
+app.post('/schematics', (req, res) => {
+  return Schematics.create({
+    image_url: req.body.image_url,
+    project_id: req.body.project_id
+  })
+  .then( (schematic) => {
+    return res.json(schematic);
+  });
+});
 
 app.get('*', (req, res) => {
   res.sendFile('./public/index.html', { root: __dirname });
