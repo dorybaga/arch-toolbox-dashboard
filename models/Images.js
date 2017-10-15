@@ -5,7 +5,7 @@ const Pins = require('./Pins');
 module.exports = function(sequelize, DataTypes) {
   var Images = sequelize.define("Images", {
     image_url: DataTypes.TEXT,
-  },
+  });
 
   Images.associate = function(models) {
 
@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
         }
       });
 
-  });
+  };
 
   return Images;
 };
