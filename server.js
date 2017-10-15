@@ -7,13 +7,35 @@ const methodOverride = require('method-override');
 const app = express();
 
 const db = require('./models');
-const { Projects, Schematics, } = require('./models');
+const { Comments, Images, Pins, Projects, Schematics, Users } = require('./models');
 
 const PORT = process.env.PORT || 3000;
 
 app.use(express.static('public'));
+app.use(bp.urlencoded());
 app.use(bp.json());
 //app.use('/api', require('./api/index.js'));
+
+app.get("/projects", (req,res) => {
+   Projects.findAll()
+      .then(project => {
+        res.json(project);
+      });
+});
+
+app.post("/projects", (req, res) => {
+        Projects.create({
+          title: req.body.title,
+          address: req.body.address,
+          client_name: req.body.client_name,
+          job_number: req.body.job_number,
+        }).then((project) => {
+            res.json(project.dataValues);
+         })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
 
 app.get('*', (req, res) => {
   res.sendFile('./public/index.html', { root: __dirname });

@@ -5,7 +5,9 @@ const Schematics = require('./Schematics');
 module.exports = function(sequelize, DataTypes) {
   var Projects = sequelize.define("Projects", {
     title: { type: DataTypes.TEXT, allowNull: false},
-    address: { type: DataTypes.TEXT, allowNull: false}
+    address: { type: DataTypes.TEXT, allowNull: false},
+    job_number: { type: DataTypes.INTEGER, allowNull: false},
+    client_name: { type: DataTypes.TEXT, allowNull: false}
   });
 
   Projects.associate = function(models) {

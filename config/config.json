@@ -1,6 +1,6 @@
 {
   "development": {
-    "username": "apple",
+    "username": "admin",
     "password": null,
     "database": "foundation_database",
     "host": "127.0.0.1",
@@ -9,15 +9,15 @@
   "test": {
     "username": "root",
     "password": null,
-    "database": "database_test",
+    "database": "foundation_database",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "postgres"
   },
   "production": {
     "username": "root",
     "password": null,
-    "database": "database_production",
+    "database": "foundation_database",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "postgres"
   }
 }
