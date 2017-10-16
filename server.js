@@ -12,9 +12,9 @@ const { Comments, Images, Pins, Projects, Schematics, Users } = require('./model
 const PORT = process.env.PORT || 3000;
 
 app.use(express.static('public'));
-app.use(bp.urlencoded());
+// app.use(bp.urlencoded());
 app.use(bp.json());
-//app.use('/api', require('./api/index.js'));
+app.use('/api', require('./api/index.js'));
 
 app.get("/projects", (req,res) => {
    Projects.findAll({
