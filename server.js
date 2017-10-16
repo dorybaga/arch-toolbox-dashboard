@@ -16,74 +16,6 @@ app.use(express.static('public'));
 app.use(bp.json());
 app.use('/api', require('./api/index.js'));
 
-app.get("/projects", (req,res) => {
-   Projects.findAll({
-    include: [
-      {model: Schematics,
-        include: [{ model: Pins }]
-      }
-    ]
-   })
-      .then(project => {
-        res.json(project);
-      });
-});
-
-app.get("/schematics", (req,res) => {
-   Schematics.findAll({
-    include: [{model: Pins}]
-   })
-      .then(schematic => {
-        res.json(schematic);
-      });
-});
-
-app.post("/projects", (req, res) => {
-  Projects.create({
-    title: req.body.title,
-    address: req.body.address,
-    client_name: req.body.client_name,
-    job_number: req.body.job_number,
-  }).then((project) => {
-      res.json(project.dataValues);
-   })
-  .catch((err) => {
-    console.log(err);
-  });
-});
-
-
-
-app.post('/schematics', (req, res) => {
-  return Schematics.create({
-    image_url: req.body.image_url,
-    project_id: req.body.project_id
-  })
-  .then( (schematic) => {
-    return res.json(schematic);
-  });
-});
-
-app.post('/pins', (req, res) => {
-  return Pins.create({
-    x: req.body.x,
-    y: req.body.y,
-    isActive: req.body.isActive,
-    width: req.body.width,
-    height: req.body.height,
-    isPositionOutside: req.body.isPositionOutside,
-    isMouseDetected: req.body.isMouseDetected,
-    isTouchDetected: req.body.isTouchDetected,
-    schematic_id: req.body.schematic_id
-  })
-  .then( (pin) => {
-    return res.json(pin);
-  })
-  .catch( (err) => {
-    console.log(err);
-  });
-
-});
 
 app.get('*', (req, res) => {
   res.sendFile('./public/index.html', { root: __dirname });
@@ -91,6 +23,6 @@ app.get('*', (req, res) => {
 
 app.listen(PORT, () => {
   db.sequelize.sync();
-  // db.sequelize.sync({force:true});
+  //db.sequelize.sync({force:true});
   console.log(`Server running on ${PORT}`);
 });
