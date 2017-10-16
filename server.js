@@ -18,10 +18,23 @@ app.use(bp.json());
 
 app.get("/projects", (req,res) => {
    Projects.findAll({
-    include: [{model: Schematics}]
+    include: [
+      {model: Schematics,
+        include: [{ model: Pins }]
+      }
+    ]
    })
       .then(project => {
         res.json(project);
+      });
+});
+
+app.get("/schematics", (req,res) => {
+   Schematics.findAll({
+    include: [{model: Pins}]
+   })
+      .then(schematic => {
+        res.json(schematic);
       });
 });
 
@@ -49,6 +62,27 @@ app.post('/schematics', (req, res) => {
   .then( (schematic) => {
     return res.json(schematic);
   });
+});
+
+app.post('/pins', (req, res) => {
+  return Pins.create({
+    x: req.body.x,
+    y: req.body.y,
+    isActive: req.body.isActive,
+    width: req.body.width,
+    height: req.body.height,
+    isPositionOutside: req.body.isPositionOutside,
+    isMouseDetected: req.body.isMouseDetected,
+    isTouchDetected: req.body.isTouchDetected,
+    schematic_id: req.body.schematic_id
+  })
+  .then( (pin) => {
+    return res.json(pin);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
 });
 
 app.get('*', (req, res) => {
