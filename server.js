@@ -12,9 +12,9 @@ const { Comments, Images, Pins, Projects, Schematics, Users } = require('./model
 const PORT = process.env.PORT || 3000;
 
 app.use(express.static('public'));
-app.use(bp.urlencoded());
+// app.use(bp.urlencoded());
 app.use(bp.json());
-//app.use('/api', require('./api/index.js'));
+app.use('/api', require('./api/index.js'));
 
 app.get("/projects", (req,res) => {
    Projects.findAll({
@@ -69,18 +69,18 @@ app.get("/schematics", (req,res) => {
 });
 
 app.post("/projects", (req, res) => {
-        Projects.create({
-          title: req.body.title,
-          address: req.body.address,
-          client_name: req.body.client_name,
-          job_number: req.body.job_number,
-        }).then((project) => {
-            res.json(project.dataValues);
-         })
-        .catch((err) => {
-          console.log(err);
-        });
-    });
+  Projects.create({
+    title: req.body.title,
+    address: req.body.address,
+    client_name: req.body.client_name,
+    job_number: req.body.job_number,
+  }).then((project) => {
+      res.json(project.dataValues);
+   })
+  .catch((err) => {
+    console.log(err);
+  });
+});
 
 
 
@@ -109,7 +109,7 @@ app.post('/pins', (req, res) => {
   .then( (pin) => {
     return res.json(pin);
   })
-  .catch((err) => {
+  .catch( (err) => {
     console.log(err);
   });
 
