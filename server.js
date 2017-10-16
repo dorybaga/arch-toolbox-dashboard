@@ -20,12 +20,42 @@ app.get("/projects", (req,res) => {
    Projects.findAll({
     include: [
       {model: Schematics,
-        include: [{ model: Pins }]
+        include: [{ model: Pins,
+          include: [{ model: Images},{ model: Comments}]
+         }]
       }
     ]
    })
       .then(project => {
-        res.json(project);
+        function result(){
+          return  project.map(proj => {
+
+            return {
+              project:{
+                  id: proj.id,
+                  title: proj.title,
+                  address: proj.address,
+                  job_number: proj.job_number,
+                  client_name: proj.client_name,
+                  updatedAt: proj.updatedAt,
+                  createdAt: proj.createdAt
+             },
+             schematic: {
+                  id: proj.Schematic.id,
+                  image_url: proj.Schematic.image_url,
+                  updatedAt: proj.Schematic.updatedAt,
+                  createdAt: proj.Schematic.createdAt
+             },
+             pin: {
+                id: proj.Schematic.Pins
+             }
+
+            };
+          });
+
+
+        }
+        res.json(result());
       });
 });
 
@@ -85,12 +115,35 @@ app.post('/pins', (req, res) => {
 
 });
 
+app.post('/images', (req, res) => {
+  return Images.create({
+    image_url: req.body.image_url,
+    pin_id: req.body.pin_id
+  })
+  .then( (image) => {
+    return res.json(image);
+  });
+});
+
+app.post('/comments', (req, res) => {
+  return Comments.create({
+    body: req.body.body,
+    pin_id: req.body.pin_id
+
+  })
+  .then( (body) => {
+    return res.json(body);
+  });
+});
+
+
+
 app.get('*', (req, res) => {
   res.sendFile('./public/index.html', { root: __dirname });
 });
 
 app.listen(PORT, () => {
   db.sequelize.sync();
-  // db.sequelize.sync({force:true});
+  //db.sequelize.sync({force:true});
   console.log(`Server running on ${PORT}`);
 });
