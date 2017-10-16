@@ -39,18 +39,18 @@ app.get("/schematics", (req,res) => {
 });
 
 app.post("/projects", (req, res) => {
-        Projects.create({
-          title: req.body.title,
-          address: req.body.address,
-          client_name: req.body.client_name,
-          job_number: req.body.job_number,
-        }).then((project) => {
-            res.json(project.dataValues);
-         })
-        .catch((err) => {
-          console.log(err);
-        });
-    });
+  Projects.create({
+    title: req.body.title,
+    address: req.body.address,
+    client_name: req.body.client_name,
+    job_number: req.body.job_number,
+  }).then((project) => {
+      res.json(project.dataValues);
+   })
+  .catch((err) => {
+    console.log(err);
+  });
+});
 
 
 
@@ -79,7 +79,7 @@ app.post('/pins', (req, res) => {
   .then( (pin) => {
     return res.json(pin);
   })
-  .catch((err) => {
+  .catch( (err) => {
     console.log(err);
   });
 
