@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { Comments, Images, Pins, Projects, Schematics, Users } = require('../../models');
 
+
 router.get('/projects', (req,res) => {
    Projects.findAll({
     include: [
@@ -12,37 +13,51 @@ router.get('/projects', (req,res) => {
       }
     ]
    })
-      .then( (project) => {
-        function result(){
-          return  project.map( (proj) => {
-
-            return {
-              project:{
-                  id: proj.id,
-                  title: proj.title,
-                  address: proj.address,
-                  job_number: proj.job_number,
-                  client_name: proj.client_name,
-                  updatedAt: proj.updatedAt,
-                  createdAt: proj.createdAt
-             },
-             schematic: {
-                  id: proj.Schematic.id,
-                  image_url: proj.Schematic.image_url,
-                  updatedAt: proj.Schematic.updatedAt,
-                  createdAt: proj.Schematic.createdAt
-             },
-             pin: {
-                id: proj.Schematic.Pins
-             }
-
+   .then( (project) => {
+      function result (){
+        return  project.map( (proj) => {
+          var obj = {};
+          proj.Schematic.Pins.map( (pin) => {
+           obj = {
+              id: pin.id,
+              x: pin.x,
+              y: pin.y,
+              isActive: pin.isActive,
+              width: pin.width,
+              height: pin.height,
+              isPositionOutside: pin.isPositionOutside,
+              isMouseDetected: pin.isMouseDetected,
+              isTouchDetected: pin.isTouchDetected,
+              createdAt: pin.createdAt,
+              updatedAt: pin.updatedAt,
+              schematic_id: pin.schematic_id,
+              images: pin.Images,
+              comments: pin.Comments
             };
-          });
+          }) ;
 
-
-        }
-        res.json(result());
-      });
+        return {
+           project:{
+                id: proj.id,
+                title: proj.title,
+                address: proj.address,
+                job_number: proj.job_number,
+                client_name: proj.client_name,
+                updatedAt: proj.updatedAt,
+                createdAt: proj.createdAt
+           },
+           schematic: {
+                id: proj.Schematic.id,
+                image_url: proj.Schematic.image_url,
+                updatedAt: proj.Schematic.updatedAt,
+                createdAt: proj.Schematic.createdAt
+           },
+           pin: obj
+          };
+        });
+      }
+    res.json(result());
+  });
 });
 
 router.get('/schematics', (req,res) => {
@@ -59,7 +74,7 @@ router.post('/projects', (req, res) => {
     title: req.body.title,
     address: req.body.address,
     client_name: req.body.client_name,
-    job_number: req.body.job_number,
+    job_number: parseInt(req.body.job_number),
   }).then( (project) => {
       res.json(project.dataValues);
    })
@@ -71,7 +86,7 @@ router.post('/projects', (req, res) => {
 router.post('/schematics', (req, res) => {
   return Schematics.create({
     image_url: req.body.image_url,
-    project_id: req.body.project_id
+    project_id: parseInt(req.body.project_id)
   })
   .then( (schematic) => {
     return res.json(schematic);
@@ -80,15 +95,15 @@ router.post('/schematics', (req, res) => {
 
 router.post('/pins', (req, res) => {
   return Pins.create({
-    x: req.body.x,
-    y: req.body.y,
+    x: parseInt(req.body.x),
+    y: parseInt(req.body.y),
     isActive: req.body.isActive,
-    width: req.body.width,
-    height: req.body.height,
+    width: parseInt(req.body.width),
+    height: parseInt(req.body.height),
     isPositionOutside: req.body.isPositionOutside,
     isMouseDetected: req.body.isMouseDetected,
     isTouchDetected: req.body.isTouchDetected,
-    schematic_id: req.body.schematic_id
+    schematic_id: parseInt(req.body.schematic_id)
   })
   .then( (pin) => {
     return res.json(pin);
@@ -102,7 +117,7 @@ router.post('/pins', (req, res) => {
 router.post('/images', (req, res) => {
   return Images.create({
     image_url: req.body.image_url,
-    pin_id: req.body.pin_id
+    pin_id: parseInt(req.body.pin_id)
   })
   .then( (image) => {
     return res.json(image);
@@ -112,7 +127,7 @@ router.post('/images', (req, res) => {
 router.post('/comments', (req, res) => {
   return Comments.create({
     body: req.body.body,
-    pin_id: req.body.pin_id
+    pin_id: parseInt(req.body.pin_id)
 
   })
   .then( (body) => {
@@ -122,3 +137,4 @@ router.post('/comments', (req, res) => {
 
 
 module.exports = router;
+
