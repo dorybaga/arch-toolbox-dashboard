@@ -12,11 +12,11 @@ const { Comments, Images, Pins, Projects, Schematics, Users } = require('./model
 const PORT = process.env.PORT || 3000;
 
 app.use(express.static('public'));
-// app.use(bp.urlencoded());
+app.use(bp.urlencoded());
 app.use(bp.json());
 app.use('/api', require('./api/index.js'));
 
-app.get("/projects", (req,res) => {
+app.get("/dashboard", (req,res) => {
    Projects.findAll({
     include: [
       {model: Schematics,
@@ -26,37 +26,51 @@ app.get("/projects", (req,res) => {
       }
     ]
    })
-      .then(project => {
-        function result(){
-          return  project.map(proj => {
-
-            return {
-              project:{
-                  id: proj.id,
-                  title: proj.title,
-                  address: proj.address,
-                  job_number: proj.job_number,
-                  client_name: proj.client_name,
-                  updatedAt: proj.updatedAt,
-                  createdAt: proj.createdAt
-             },
-             schematic: {
-                  id: proj.Schematic.id,
-                  image_url: proj.Schematic.image_url,
-                  updatedAt: proj.Schematic.updatedAt,
-                  createdAt: proj.Schematic.createdAt
-             },
-             pin: {
-                id: proj.Schematic.Pins
-             }
-
+   .then(project => {
+      function result(){
+        return  project.map(proj => {
+          var obj = {};
+          proj.Schematic.Pins.map(pin => {
+           obj = {
+              id: pin.id,
+              x: pin.x,
+              y: pin.y,
+              isActive: pin.isActive,
+              width: pin.width,
+              height: pin.height,
+              isPositionOutside: pin.isPositionOutside,
+              isMouseDetected: pin.isMouseDetected,
+              isTouchDetected: pin.isTouchDetected,
+              createdAt: pin.createdAt,
+              updatedAt: pin.updatedAt,
+              schematic_id: pin.schematic_id,
+              images: pin.Images,
+              comments: pin.Comments
             };
-          });
+          }) ;
 
-
-        }
-        res.json(result());
-      });
+        return {
+           project:{
+                id: proj.id,
+                title: proj.title,
+                address: proj.address,
+                job_number: proj.job_number,
+                client_name: proj.client_name,
+                updatedAt: proj.updatedAt,
+                createdAt: proj.createdAt
+           },
+           schematic: {
+                id: proj.Schematic.id,
+                image_url: proj.Schematic.image_url,
+                updatedAt: proj.Schematic.updatedAt,
+                createdAt: proj.Schematic.createdAt
+           },
+           pin: obj
+          };
+        });
+      }
+    res.json(result());
+  });
 });
 
 app.get("/schematics", (req,res) => {
@@ -81,6 +95,20 @@ app.post("/projects", (req, res) => {
     console.log(err);
   });
 });
+
+app.post('/users', (req, res) => {
+  Users.create({
+   firstName: req.body.firstName,
+   lastName: req.body.lastName,
+   email: req.body.email,
+   password: req.body.password,
+   user_role: req.body.user_role
+ })
+  .then( (user) => {
+    return res.json(user);
+  });
+});
+
 
 
 

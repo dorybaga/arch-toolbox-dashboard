@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const userRouter = require('./desktop');
-const topicRouter = require('./map');
-const messageRouter = require('./users');
+const desktopRouter = require('./desktop');
+const mapRouter = require('./map');
+const usersRouter = require('./users');
 
 router.use('/', desktopRouter);
 router.use('/', mapRouter);

@@ -1,4 +1,5 @@
 const sequelize = require('sequelize');
+const Projects = require('./Projects');
 
 
 
@@ -9,13 +10,17 @@ module.exports = function(sequelize, DataTypes) {
     email: { type: DataTypes.TEXT, allowNull: false},
     password: { type: DataTypes.TEXT, allowNull: false},
     user_role: { type: DataTypes.TEXT, allowNull: false}
-  },{
-    classMethods: {
-      associate: function(models) {
-
-      }
-    }
   });
+
+   Users.associate = function(models) {
+
+    Users.belongsToMany(models.Projects,
+      {
+        as: 'Users',
+        through: 'users_projects',
+        foreignKey: 'user_id'
+      });
+    };
 
   return Users;
 };
