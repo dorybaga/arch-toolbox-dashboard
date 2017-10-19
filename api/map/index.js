@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { Comments, Images, Pins, Projects, Schematics, Users } = require('../../models');
 
+<<<<<<< HEAD
+module.exports = router;
+=======
 router.get('/projects', (req,res) => {
    Projects.findAll({
     include: [
@@ -122,3 +125,4 @@ router.post('/comments', (req, res) => {
 
 
 module.exports = router;
+>>>>>>> 7dde58df88c88be96b17cea4b95807c5b967bd2a

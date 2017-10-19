@@ -12,6 +12,13 @@ module.exports = function(sequelize, DataTypes) {
 
   Projects.associate = function(models) {
 
+    Projects.belongsToMany(models.Users,
+      {
+        as: 'Projects',
+        through: 'users_projects',
+        foreignKey: 'project_id'
+      });
+
     Projects.hasOne(models.Schematics,
       {
         foreignKey: {
