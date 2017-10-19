@@ -16,6 +16,12 @@ app.use(bp.urlencoded());
 app.use(bp.json());
 app.use('/api', require('./api/index.js'));
 
+app.get('*', (req, res) => {
+  res.sendFile('./public/index.html', { root: __dirname });
+});
+
+
+
 app.get("/dashboard", (req,res) => {
    Projects.findAll({
     include: [
@@ -164,11 +170,6 @@ app.post('/comments', (req, res) => {
   });
 });
 
-
-
-app.get('*', (req, res) => {
-  res.sendFile('./public/index.html', { root: __dirname });
-});
 
 app.listen(PORT, () => {
   db.sequelize.sync();
