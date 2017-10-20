@@ -14,7 +14,7 @@ router.get('/projects', (req,res) => {
     ]
    })
    .then( (project) => {
-      function result (){
+      function result () {
         return  project.map( (proj) => {
           var obj = {};
           proj.Schematic.Pins.map( (pin) => {
@@ -61,35 +61,11 @@ router.get('/projects', (req,res) => {
 });
 
 router.get('/schematics', (req,res) => {
-   Schematics.findAll({
+  Schematics.findAll({
     include: [{model: Pins}]
-   })
-      .then( (schematic) => {
-        res.json(schematic);
-      });
-});
-
-router.post('/projects', (req, res) => {
-  Projects.create({
-    title: req.body.title,
-    address: req.body.address,
-    client_name: req.body.client_name,
-    job_number: parseInt(req.body.job_number),
-  }).then( (project) => {
-      res.json(project.dataValues);
-   })
-  .catch( (err) => {
-    console.log(err);
-  });
-});
-
-router.post('/schematics', (req, res) => {
-  return Schematics.create({
-    image_url: req.body.image_url,
-    project_id: parseInt(req.body.project_id)
   })
   .then( (schematic) => {
-    return res.json(schematic);
+    res.json(schematic);
   });
 });
 
@@ -109,7 +85,7 @@ router.post('/pins', (req, res) => {
     return res.json(pin);
   })
   .catch( (err) => {
-    console.log(err);
+    console.log('Invalid Pin');
   });
 
 });
@@ -121,6 +97,9 @@ router.post('/images', (req, res) => {
   })
   .then( (image) => {
     return res.json(image);
+  })
+  .catch( (err) => {
+    console.log(err);
   });
 });
 
@@ -132,6 +111,9 @@ router.post('/comments', (req, res) => {
   })
   .then( (body) => {
     return res.json(body);
+  })
+  .catch( (err) => {
+    console.log(err);
   });
 });
 
