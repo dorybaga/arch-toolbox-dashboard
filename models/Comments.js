@@ -5,7 +5,7 @@ const Pins = require('./Pins');
 module.exports = function(sequelize, DataTypes) {
   var Comments = sequelize.define("Comments",
    {
-    body: { type: DataTypes.TEXT, allowNull: false}
+    body: { type: DataTypes.TEXT, allowNull: false }
   });
 
   Comments.associate = function(models) {
@@ -14,6 +14,14 @@ module.exports = function(sequelize, DataTypes) {
       {
         foreignKey: {
           name: 'pin_id',
+          allowNull: false
+        }
+      });
+
+    Comments.belongsTo(models.Users,
+      {
+        foreignKey: {
+          name: 'user_id',
           allowNull: false
         }
       });

@@ -8,16 +8,19 @@ router.get('/projects', (req,res) => {
     include: [
       {model: Schematics,
         include: [{ model: Pins,
-          include: [{ model: Images},{ model: Comments}]
+          include: [{ model: Images, include: [{ model: Users}]},{ model: Comments, include: [{ model: Users}]}, {model: Users}]
          }]
       }
     ]
    })
    .then( (project) => {
-      function result (){
+      function result () {
         return  project.map( (proj) => {
+
           var obj = {};
           proj.Schematic.Pins.map( (pin) => {
+             console.log(Object.keys(pin));
+
            obj = {
               id: pin.id,
               x: pin.x,
@@ -32,7 +35,8 @@ router.get('/projects', (req,res) => {
               updatedAt: pin.updatedAt,
               schematic_id: pin.schematic_id,
               images: pin.Images,
-              comments: pin.Comments
+              comments: pin.Comments,
+              user: pin.User
             };
           }) ;
 
@@ -61,36 +65,12 @@ router.get('/projects', (req,res) => {
 });
 
 router.get('/schematics', (req,res) => {
-   Schematics.findAll({
+  Schematics.findAll({
     include: [{model: Pins}]
    })
       .then( (schematic) => {
         res.json(schematic);
       });
-});
-
-router.post('/projects', (req, res) => {
-  Projects.create({
-    title: req.body.title,
-    address: req.body.address,
-    client_name: req.body.client_name,
-    job_number: parseInt(req.body.job_number),
-  }).then( (project) => {
-      res.json(project.dataValues);
-   })
-  .catch( (err) => {
-    console.log(err);
-  });
-});
-
-router.post('/schematics', (req, res) => {
-  return Schematics.create({
-    image_url: req.body.image_url,
-    project_id: parseInt(req.body.project_id)
-  })
-  .then( (schematic) => {
-    return res.json(schematic);
-  });
 });
 
 router.post('/pins', (req, res) => {
@@ -103,13 +83,14 @@ router.post('/pins', (req, res) => {
     isPositionOutside: req.body.isPositionOutside,
     isMouseDetected: req.body.isMouseDetected,
     isTouchDetected: req.body.isTouchDetected,
+    user_id: parseInt(req.body.user_id),
     schematic_id: parseInt(req.body.schematic_id)
   })
   .then( (pin) => {
     return res.json(pin);
   })
   .catch( (err) => {
-    console.log(err);
+    console.log('Invalid Pin');
   });
 
 });
@@ -117,21 +98,28 @@ router.post('/pins', (req, res) => {
 router.post('/images', (req, res) => {
   return Images.create({
     image_url: req.body.image_url,
-    pin_id: parseInt(req.body.pin_id)
+    pin_id: parseInt(req.body.pin_id),
+    user_id: parseInt(req.body.user_id)
   })
   .then( (image) => {
     return res.json(image);
+  })
+  .catch( (err) => {
+    console.log(err);
   });
 });
 
 router.post('/comments', (req, res) => {
   return Comments.create({
     body: req.body.body,
-    pin_id: parseInt(req.body.pin_id)
-
+    pin_id: parseInt(req.body.pin_id),
+    user_id: parseInt(req.body.user_id)
   })
   .then( (body) => {
     return res.json(body);
+  })
+  .catch( (err) => {
+    console.log(err);
   });
 });
 
