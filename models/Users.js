@@ -1,5 +1,7 @@
 const sequelize = require('sequelize');
 const Projects = require('./Projects');
+const Pins = require('./Pins');
+
 
 
 

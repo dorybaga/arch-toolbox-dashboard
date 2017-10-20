@@ -1,5 +1,9 @@
 const sequelize = require('sequelize');
 const Schematics = require('./Schematics');
+const Users = require('./Users');
+
+
+
 
 
 module.exports = function(sequelize, DataTypes) {
@@ -7,7 +11,8 @@ module.exports = function(sequelize, DataTypes) {
     title: { type: DataTypes.TEXT, allowNull: false},
     address: { type: DataTypes.TEXT, allowNull: false},
     job_number: { type: DataTypes.INTEGER, allowNull: false},
-    client_name: { type: DataTypes.TEXT, allowNull: false}
+    client_name: { type: DataTypes.TEXT, allowNull: false},
+    creator: { type: DataTypes.TEXT, allowNull: false}
   });
 
   Projects.associate = function(models) {

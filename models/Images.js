@@ -17,6 +17,14 @@ module.exports = function(sequelize, DataTypes) {
         }
       });
 
+    Images.belongsTo(models.Users,
+      {
+        foreignKey: {
+          name: 'user_id',
+          allowNull: false
+        }
+      });
+
   };
 
   return Images;

@@ -4,7 +4,7 @@ const { Comments, Images, Pins, Projects, Schematics, Users } = require('../../m
 
 
 router.get('/users', (req, res) => {
-  Users.findAll({ attributes: ['id', 'firstName'] })
+  Users.findAll({include: [{ model: Pins}]})
   .then( (users) => {
     return res.json(users);
   });

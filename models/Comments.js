@@ -18,6 +18,14 @@ module.exports = function(sequelize, DataTypes) {
         }
       });
 
+    Comments.belongsTo(models.Users,
+      {
+        foreignKey: {
+          name: 'user_id',
+          allowNull: false
+        }
+      });
+
   };
 
   return Comments;
