@@ -5,7 +5,7 @@ const Pins = require('./Pins');
 
 module.exports = function(sequelize, DataTypes) {
   var Schematics = sequelize.define("Schematics", {
-    image_url: { type: DataTypes.TEXT, allowNull: false}
+    image_url: { type: DataTypes.TEXT, allowNull: false }
   });
 
   Schematics.associate = function(models) {

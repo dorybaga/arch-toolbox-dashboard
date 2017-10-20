@@ -4,37 +4,31 @@ const { Comments, Images, Pins, Projects, Schematics, Users } = require('../../m
 
 
 router.get('/users', (req, res) => {
-  Users.findAll({include: [{ model: Pins}]})
+  Users.findAll()
   .then( (users) => {
     return res.json(users);
   });
 });
 
-// router.get('/users/:id', (req, res) => {
-//   let userId = req.params.id;
-//   return Users.findById(userId, {
-//     attributes: ['id', 'firstName'],
-//     include: [
-//       {
-//         model: Messages,
-//         attributes: ['body', 'createdAt'],
-//         include: [
-//           {
-//             model: Topics,
-//             attributes: ['name', 'id']
-//           }
-//         ]
-//       }
-//     ]
-//   })
-//   .then( (result) => {
-//     res.json(result);
-//   });
-// });
+router.get('/users/:id', (req, res) => {
+  let userId = req.params.id;
+  Users.findById(userId, {
+    attributes: ['id', 'firstName', 'lastName'],
+    include: [
+      {
+        model: Projects,
+        attributes: ['title', 'address'],
+      }
+    ]
+  })
+  .then( (result) => {
+    res.json(result);
+  });
+});
 
 
 router.post('/users', (req, res) => {
-  Users.create({
+  return Users.create({
    firstName: req.body.firstName,
    lastName: req.body.lastName,
    email: req.body.email,
