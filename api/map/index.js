@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { Comments, Images, Pins, Projects, Schematics, Users } = require('../../models');
 
-
 router.get('/projects', (req,res) => {
+   var id = parseInt(req.params.id);
    Projects.findAll({
     include: [
       {model: Schematics,
@@ -14,8 +14,43 @@ router.get('/projects', (req,res) => {
     ]
    })
    .then( (project) => {
+
       function result () {
         return  project.map( (proj) => {
+
+        return {
+           project:{
+                id: proj.id,
+                title: proj.title,
+                address: proj.address,
+                job_number: proj.job_number,
+                client_name: proj.client_name,
+                creator:proj.creator,
+                updatedAt: proj.updatedAt,
+                createdAt: proj.createdAt
+           }
+          };
+        });
+      }
+    res.json(result());
+  });
+});
+
+router.get('/project/:id', (req,res) => {
+   var id = parseInt(req.params.id);
+   Projects.findAll({
+    include: [
+      {model: Schematics,
+        include: [{ model: Pins,
+          include: [{ model: Images, include: [{ model: Users}]},{ model: Comments, include: [{ model: Users}]}, {model: Users}]
+         }]
+      }
+    ]
+   })
+   .then( (project) => {
+
+      function result () {
+        return  project.filter(proj => proj.id === id).map( (proj) => {
 
           var obj = {};
           proj.Schematic.Pins.map( (pin) => {
@@ -47,6 +82,7 @@ router.get('/projects', (req,res) => {
                 address: proj.address,
                 job_number: proj.job_number,
                 client_name: proj.client_name,
+                creator:proj.creator,
                 updatedAt: proj.updatedAt,
                 createdAt: proj.createdAt
            },
@@ -64,13 +100,59 @@ router.get('/projects', (req,res) => {
   });
 });
 
+router.get('/project/:project_id/pin/:pin_id', (req,res) => {
+   var project_id = parseInt(req.params.project_id);
+   var pin_id = parseInt(req.params.pin_id);
+   Projects.findAll({
+    include: [
+      {model: Schematics,
+        include: [{ model: Pins,
+          include: [{ model: Images, include: [{ model: Users}]},{ model: Comments, include: [{ model: Users}]}, {model: Users}]
+         }]
+      }
+    ]
+   })
+  .then( (pin) => {
+   function result () {
+        return  pin.filter(proj => proj.id === project_id).map( (proj) => {
+
+          var obj = {};
+          proj.Schematic.Pins.filter(pin => pin.id === pin_id).map( (pin) => {
+
+
+           obj = {
+              id: pin.id,
+              x: pin.x,
+              y: pin.y,
+              isActive: pin.isActive,
+              width: pin.width,
+              height: pin.height,
+              isPositionOutside: pin.isPositionOutside,
+              isMouseDetected: pin.isMouseDetected,
+              isTouchDetected: pin.isTouchDetected,
+              createdAt: pin.createdAt,
+              updatedAt: pin.updatedAt,
+              schematic_id: pin.schematic_id,
+              images: pin.Images,
+              comments: pin.Comments,
+              user: pin.User
+            };
+          });
+
+        return obj;
+        });
+      }
+    res.json(result());
+  });
+});
+
 router.get('/schematics', (req,res) => {
   Schematics.findAll({
     include: [{model: Pins}]
    })
-      .then( (schematic) => {
-        res.json(schematic);
-      });
+  .then( (schematic) => {
+    res.json(schematic);
+  });
 });
 
 router.post('/pins', (req, res) => {
@@ -91,8 +173,7 @@ router.post('/pins', (req, res) => {
   })
   .catch( (err) => {
     console.log('Invalid Pin');
-  });
-
+  });p
 });
 
 router.post('/images', (req, res) => {
