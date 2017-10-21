@@ -52,30 +52,9 @@ router.get('/projects/:id', (req,res) => {
       function result () {
         return  project.filter(proj => proj.id === id).map( (proj) => {
           var final ={};
-          var pin = {};
-          proj.Schematic.Pins.map( (pin) => {
-             console.log(Object.keys(pin));
+          var obj = {};
 
-           obj = {
-              id: pin.id,
-              x: pin.x,
-              y: pin.y,
-              isActive: pin.isActive,
-              width: pin.width,
-              height: pin.height,
-              isPositionOutside: pin.isPositionOutside,
-              isMouseDetected: pin.isMouseDetected,
-              isTouchDetected: pin.isTouchDetected,
-              createdAt: pin.createdAt,
-              updatedAt: pin.updatedAt,
-              schematic_id: pin.schematic_id,
-              images: pin.Images,
-              comments: pin.Comments,
-              user: pin.User
-            };
-          }) ;
-
-          if(!proj.Schematic.id){
+          if(!proj.Schematic){
             final = {
                project:{
                     id: proj.id,
@@ -89,6 +68,27 @@ router.get('/projects/:id', (req,res) => {
                }
              };
           }else{
+            proj.Schematic.Pins.map( (pin) => {
+               console.log(Object.keys(pin));
+
+             obj = {
+                id: pin.id,
+                x: pin.x,
+                y: pin.y,
+                isActive: pin.isActive,
+                width: pin.width,
+                height: pin.height,
+                isPositionOutside: pin.isPositionOutside,
+                isMouseDetected: pin.isMouseDetected,
+                isTouchDetected: pin.isTouchDetected,
+                createdAt: pin.createdAt,
+                updatedAt: pin.updatedAt,
+                schematic_id: pin.schematic_id,
+                images: pin.Images,
+                comments: pin.Comments,
+                user: pin.User
+              };
+            }) ;
              final = {
                project:{
                     id: proj.id,
@@ -109,8 +109,6 @@ router.get('/projects/:id', (req,res) => {
                pin: obj
              };
           }
-
-
 
         return final;
         });
