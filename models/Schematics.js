@@ -15,7 +15,8 @@ module.exports = function(sequelize, DataTypes) {
         foreignKey: {
           name: 'schematic_id',
           allowNull: false
-        }
+        },
+        onDelete: 'CASCADE'
       });
 
     Schematics.belongsTo(models.Projects,

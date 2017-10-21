@@ -4,15 +4,7 @@ const { Comments, Images, Pins, Projects, Schematics, Users } = require('../../m
 
 router.get('/projects', (req,res) => {
    var id = parseInt(req.params.id);
-   Projects.findAll({
-    include: [
-      {model: Schematics,
-        include: [{ model: Pins,
-          include: [{ model: Images, include: [{ model: Users}]},{ model: Comments, include: [{ model: Users}]}, {model: Users}]
-         }]
-      }
-    ]
-   })
+   Projects.findAll()
    .then( (project) => {
 
       function result () {
@@ -35,6 +27,29 @@ router.get('/projects', (req,res) => {
     res.json(result());
   });
 });
+
+router.delete('/projects/:id', (req,res) => {
+  Projects.destroy({
+    where: {
+      id : parseInt(req.params.id)
+    }
+}).then((data) => {
+    console.log('Deleted');
+    res.redirect("/");
+  });
+});
+
+router.delete('/pin/:id', (req,res) => {
+  Pins.destroy({
+    where: {
+      id : parseInt(req.params.id)
+    }
+}).then((data) => {
+    console.log('Deleted');
+    res.redirect("/");
+  });
+});
+
 
 router.get('/projects/:id', (req,res) => {
    var id = parseInt(req.params.id);
@@ -322,83 +337,3 @@ router.post('/comments', (req, res) => {
 
 
 module.exports = router;
-
-// router.get('/projects/:id', (req,res) => {
-//    var id = parseInt(req.params.id);
-//    Projects.findAll({
-//     include: [
-//       {model: Schematics,
-//         include: [{ model: Pins,
-//           include: [{ model: Images, include: [{ model: Users}]},{ model: Comments, include: [{ model: Users}]}, {model: Users}]
-//          }]
-//       }
-//     ]
-//    })
-//    .then( (project) => {
-//     function result () {
-//       return  project.filter(proj => proj.id === id).map( (proj) => {
-//          var pin = {};
-//           proj.Schematic.Pins.map((pin) => {
-//                pin = {
-//                   id: pin.id,
-//                   x: pin.x,
-//                   y: pin.y,
-//                   isActive: pin.isActive,
-//                   width: pin.width,
-//                   height: pin.height,
-//                   isPositionOutside: pin.isPositionOutside,
-//                   isMouseDetected: pin.isMouseDetected,
-//                   isTouchDetected: pin.isTouchDetected,
-//                   createdAt: pin.createdAt,
-//                   updatedAt: pin.updatedAt,
-//                   schematic_id: pin.schematic_id,
-//                   images: pin.Images,
-//                   comments: pin.Comments,
-//                   user: pin.User
-//                };
-//             });
-
-//         var project = {};
-//         var schematic ={};
-
-
-//         if(!proj.id){
-//           project = {};
-//         }else{
-//          project = {
-//             id: proj.id,
-//             title: proj.title,
-//             address: proj.address,
-//             job_number: proj.job_number,
-//             client_name: proj.client_name,
-//             creator:proj.creator,
-//             updatedAt: proj.updatedAt,
-//             createdAt: proj.createdAt
-//          };
-//         }
-
-//         if(!proj.Schematic.id){
-//           schematic ={};
-//         }else{
-//          schematic =  {
-//             id: proj.Schematic.id,
-//             image_url: proj.Schematic.image_url,
-//             updatedAt: proj.Schematic.updatedAt,
-//             createdAt: proj.Schematic.createdAt
-//          };
-//         }
-
-//         // if(!proj.id){
-//         //     pin = {};
-//         // }
-
-//       return {
-//          project: project,
-//          schematic: schematic,
-//          pin: pin
-//         };
-//       });
-//      }
-//    res.json(result());
-//   });
-// });
