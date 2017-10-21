@@ -19,6 +19,28 @@ router.post('/projects', (req, res) => {
   });
 });
 
+router.delete('/projects/:id', (req, res) => {
+  Projects.destroy({
+    where: {
+      id: req.params.id
+    },
+    include: [
+      {model: Schematics,
+        include: [{ model: Pins,
+          include: [{ model: Images, include: [{ model: Users }]}, { model: Comments, include: [{ model: Users }]}, { model: Users }]
+         }]
+      }
+    ]
+  })
+  .then( (data) => {
+    console.log('Deleted Project');
+    res.end();
+  })
+  .catch( (err) => {
+    console.log(err);
+  });
+});
+
 router.post('/schematics', (req, res) => {
   return Schematics.create({
     image_url: req.body.image_url,
@@ -26,6 +48,21 @@ router.post('/schematics', (req, res) => {
   })
   .then( (schematic) => {
     return res.json(schematic);
+  })
+  .catch( (err) => {
+    console.log(err);
+  });
+});
+
+router.delete('/schematics/:id', (req, res) => {
+  Schematics.destroy({
+    where: {
+      id: req.params.id
+    }
+  })
+  .then( (data) => {
+    console.log('Deleted Schematic');
+    res.end();
   })
   .catch( (err) => {
     console.log(err);

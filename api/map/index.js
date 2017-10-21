@@ -36,13 +36,13 @@ router.get('/projects', (req,res) => {
   });
 });
 
-router.get('/project/:id', (req,res) => {
+router.get('/projects/:id', (req,res) => {
    var id = parseInt(req.params.id);
    Projects.findAll({
     include: [
       {model: Schematics,
         include: [{ model: Pins,
-          include: [{ model: Images, include: [{ model: Users}]},{ model: Comments, include: [{ model: Users}]}, {model: Users}]
+          include: [{ model: Images, include: [{ model: Users}]}, { model: Comments, include: [{ model: Users}]}, {model: Users}]
          }]
       }
     ]
@@ -50,7 +50,7 @@ router.get('/project/:id', (req,res) => {
    .then( (project) => {
 
       function result () {
-        return  project.filter(proj => proj.id === id).map( (proj) => {
+        return  project.filter( (proj) => proj.id === id).map( (proj) => {
 
           var obj = {};
           proj.Schematic.Pins.map( (pin) => {
@@ -100,7 +100,7 @@ router.get('/project/:id', (req,res) => {
   });
 });
 
-router.get('/project/:project_id/pin/:pin_id', (req,res) => {
+router.get('/projects/:project_id/pin/:pin_id', (req,res) => {
    var project_id = parseInt(req.params.project_id);
    var pin_id = parseInt(req.params.pin_id);
    Projects.findAll({
@@ -114,10 +114,10 @@ router.get('/project/:project_id/pin/:pin_id', (req,res) => {
    })
   .then( (pin) => {
    function result () {
-        return  pin.filter(proj => proj.id === project_id).map( (proj) => {
+        return  pin.filter( (proj) => proj.id === project_id).map( (proj) => {
 
           var obj = {};
-          proj.Schematic.Pins.filter(pin => pin.id === pin_id).map( (pin) => {
+          proj.Schematic.Pins.filter( (pin) => pin.id === pin_id).map( (pin) => {
 
 
            obj = {
@@ -148,7 +148,7 @@ router.get('/project/:project_id/pin/:pin_id', (req,res) => {
 
 router.get('/schematics', (req,res) => {
   Schematics.findAll({
-    include: [{model: Pins}]
+    include: [{ model: Pins }]
    })
   .then( (schematic) => {
     res.json(schematic);
@@ -173,7 +173,7 @@ router.post('/pins', (req, res) => {
   })
   .catch( (err) => {
     console.log('Invalid Pin');
-  });p
+  });
 });
 
 router.post('/images', (req, res) => {
