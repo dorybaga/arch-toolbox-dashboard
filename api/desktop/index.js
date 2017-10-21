@@ -58,7 +58,8 @@ router.delete('/schematics/:id', (req, res) => {
   Schematics.destroy({
     where: {
       id: req.params.id
-    }
+    },
+    include: [{ model: Pins }]
   })
   .then( (data) => {
     console.log('Deleted Schematic');
