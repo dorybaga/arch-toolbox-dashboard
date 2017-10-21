@@ -51,7 +51,7 @@ router.get('/projects/:id', (req,res) => {
 
       function result () {
         return  project.filter(proj => proj.id === id).map( (proj) => {
-
+          var final ={};
           var pin = {};
           proj.Schematic.Pins.map( (pin) => {
              console.log(Object.keys(pin));
@@ -76,7 +76,7 @@ router.get('/projects/:id', (req,res) => {
           }) ;
 
           if(!proj.Schematic.id){
-            return {
+            final = {
                project:{
                     id: proj.id,
                     title: proj.title,
@@ -89,7 +89,7 @@ router.get('/projects/:id', (req,res) => {
                }
              };
           }else{
-             return {
+             final = {
                project:{
                     id: proj.id,
                     title: proj.title,
@@ -112,25 +112,7 @@ router.get('/projects/:id', (req,res) => {
 
 
 
-        return {
-           project:{
-                id: proj.id,
-                title: proj.title,
-                address: proj.address,
-                job_number: proj.job_number,
-                client_name: proj.client_name,
-                creator:proj.creator,
-                updatedAt: proj.updatedAt,
-                createdAt: proj.createdAt
-           },
-           schematic: {
-                id: proj.Schematic.id,
-                image_url: proj.Schematic.image_url,
-                updatedAt: proj.Schematic.updatedAt,
-                createdAt: proj.Schematic.createdAt
-           },
-           pin: obj
-          };
+        return final;
         });
       }
     res.json(result());
