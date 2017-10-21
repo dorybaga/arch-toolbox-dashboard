@@ -29,7 +29,8 @@ module.exports = function(sequelize, DataTypes) {
         foreignKey: {
           name: 'project_id',
           allowNull: false
-        }
+        },
+        onDelete: 'CASCADE'
       });
 
   };

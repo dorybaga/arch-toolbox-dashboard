@@ -25,7 +25,8 @@ module.exports = function(sequelize, DataTypes) {
         foreignKey: {
           name: 'pin_id',
           allowNull: false
-        }
+        },
+        onDelete: 'CASCADE'
       });
 
     Pins.hasMany(models.Comments,
@@ -33,7 +34,8 @@ module.exports = function(sequelize, DataTypes) {
         foreignKey: {
           name: 'pin_id',
           allowNull: false
-        }
+        },
+        onDelete: 'CASCADE'
       });
 
     Pins.belongsTo(models.Users,
