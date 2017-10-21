@@ -23,14 +23,7 @@ router.delete('/projects/:id', (req, res) => {
   Projects.destroy({
     where: {
       id: req.params.id
-    },
-    include: [
-      {model: Schematics,
-        include: [{ model: Pins,
-          include: [{ model: Images, include: [{ model: Users }]}, { model: Comments, include: [{ model: Users }]}, { model: Users }]
-         }]
-      }
-    ]
+    }
   })
   .then( (data) => {
     console.log('Deleted Project');
