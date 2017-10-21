@@ -2,6 +2,37 @@ const express = require('express');
 const router = express.Router();
 const { Comments, Images, Pins, Projects, Schematics, Users } = require('../../models');
 
+// const passport = require('passport');
+// const LocalStrategy = require('passport-local').Strategy;
+// const bcrypt = require('bcrypt');
+
+const saltRound = 10;
+
+// Create/add new user to database
+router.route('/')
+  .post( (req, res) => {
+    bcrypt.genSalt(saltRound)
+      .then( (salt) => {
+        bcrypt.hash(req.body.password, salt)
+          .then( (hash) => {
+            console.log(hash);
+            User.create({
+              email: req.body.email,
+              password: hash
+            }).then( () => {
+              console.log('Inserted new user');
+              res.end();
+            }).catch( (err) => {
+              console.log(err);
+            });
+          });
+      })
+      .catch( (err) => {
+        console.log(err);
+      });
+    res.redirect('/');
+  });
+
 
 router.get('/users', (req, res) => {
   Users.findAll()
@@ -25,7 +56,6 @@ router.get('/users/:id', (req, res) => {
     res.json(result);
   });
 });
-
 
 router.post('/users', (req, res) => {
   return Users.create({

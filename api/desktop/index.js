@@ -9,7 +9,8 @@ router.post('/projects', (req, res) => {
     address: req.body.address,
     client_name: req.body.client_name,
     job_number: parseInt(req.body.job_number),
-  }).then( (project) => {
+  })
+  .then( (project) => {
       res.json(project.dataValues);
    })
   .catch( (err) => {
