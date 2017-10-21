@@ -67,9 +67,38 @@ router.get('/projects/:id', (req,res) => {
                     createdAt: proj.createdAt
                }
              };
-          }else{
+          }
+          else if(!proj.Schematic.Pins){
+              final = {
+                project:{
+                    id: proj.id,
+                    title: proj.title,
+                    address: proj.address,
+                    job_number: proj.job_number,
+                    client_name: proj.client_name,
+                    creator:proj.creator,
+                    updatedAt: proj.updatedAt,
+                    createdAt: proj.createdAt
+               },
+               schematic: {
+                    id: proj.Schematic.id,
+                    image_url: proj.Schematic.image_url,
+                    updatedAt: proj.Schematic.updatedAt,
+                    createdAt: proj.Schematic.createdAt
+               }
+             };
+
+          }
+          else{
             proj.Schematic.Pins.map( (pin) => {
-               console.log(Object.keys(pin));
+               var images = [];
+               var comments = [];
+               if(pin.Images){
+                images = pin.Images;
+               }
+               if(pin.Comments){
+                comments = pin.Comments;
+               }
 
              obj = {
                 id: pin.id,
@@ -84,8 +113,8 @@ router.get('/projects/:id', (req,res) => {
                 createdAt: pin.createdAt,
                 updatedAt: pin.updatedAt,
                 schematic_id: pin.schematic_id,
-                images: pin.Images,
-                comments: pin.Comments,
+                images: images,
+                comments: comments,
                 user: pin.User
               };
             }) ;
