@@ -11,7 +11,7 @@ router.get('/projects', (req,res) => {
         return  project.map( (proj) => {
 
         return {
-           project:{
+           project: {
                 id: proj.id,
                 title: proj.title,
                 address: proj.address,
@@ -33,9 +33,9 @@ router.delete('/projects/:id', (req,res) => {
     where: {
       id : parseInt(req.params.id)
     }
-}).then((data) => {
+}).then( (data) => {
     console.log('Deleted');
-    res.redirect("/");
+    res.redirect('/');
   });
 });
 
@@ -46,7 +46,7 @@ router.delete('/pin/:id', (req,res) => {
     }
 }).then((data) => {
     console.log('Deleted');
-    res.redirect("/");
+    res.redirect('/');
   });
 });
 
@@ -69,9 +69,9 @@ router.get('/projects/:id', (req,res) => {
           var final ={};
           var obj = {};
 
-          if(!proj.Schematic){
+          if (!proj.Schematic){
             final = {
-               project:{
+               project: {
                     id: proj.id,
                     title: proj.title,
                     address: proj.address,
@@ -83,9 +83,9 @@ router.get('/projects/:id', (req,res) => {
                }
              };
           }
-          else if(!proj.Schematic.Pins){
+          else if (!proj.Schematic.Pins){
               final = {
-                project:{
+                project: {
                     id: proj.id,
                     title: proj.title,
                     address: proj.address,
@@ -103,58 +103,56 @@ router.get('/projects/:id', (req,res) => {
                }
              };
 
-          }
-          else{
-            proj.Schematic.Pins.map( (pin) => {
-               var images = [];
-               var comments = [];
-               if(pin.Images){
-                images = pin.Images;
-               }
-               if(pin.Comments){
-                comments = pin.Comments;
-               }
+          } else {
+              proj.Schematic.Pins.map( (pin) => {
+                 var images = [];
+                 var comments = [];
+                 if(pin.Images){
+                  images = pin.Images;
+                 }
+                 if(pin.Comments){
+                  comments = pin.Comments;
+                 }
 
-             obj = {
-                id: pin.id,
-                x: pin.x,
-                y: pin.y,
-                isActive: pin.isActive,
-                width: pin.width,
-                height: pin.height,
-                isPositionOutside: pin.isPositionOutside,
-                isMouseDetected: pin.isMouseDetected,
-                isTouchDetected: pin.isTouchDetected,
-                createdAt: pin.createdAt,
-                updatedAt: pin.updatedAt,
-                schematic_id: pin.schematic_id,
-                images: images,
-                comments: comments,
-                user: pin.User
-              };
-            }) ;
-             final = {
-               project:{
-                    id: proj.id,
-                    title: proj.title,
-                    address: proj.address,
-                    job_number: proj.job_number,
-                    client_name: proj.client_name,
-                    creator:proj.creator,
-                    updatedAt: proj.updatedAt,
-                    createdAt: proj.createdAt
-               },
-               schematic: {
-                    id: proj.Schematic.id,
-                    image_url: proj.Schematic.image_url,
-                    updatedAt: proj.Schematic.updatedAt,
-                    createdAt: proj.Schematic.createdAt
-               },
-               pin: obj
-             };
-          }
-
-        return final;
+               obj = {
+                  id: pin.id,
+                  x: pin.x,
+                  y: pin.y,
+                  isActive: pin.isActive,
+                  width: pin.width,
+                  height: pin.height,
+                  isPositionOutside: pin.isPositionOutside,
+                  isMouseDetected: pin.isMouseDetected,
+                  isTouchDetected: pin.isTouchDetected,
+                  createdAt: pin.createdAt,
+                  updatedAt: pin.updatedAt,
+                  schematic_id: pin.schematic_id,
+                  images: images,
+                  comments: comments,
+                  user: pin.User
+                };
+              }) ;
+               final = {
+                 project: {
+                      id: proj.id,
+                      title: proj.title,
+                      address: proj.address,
+                      job_number: proj.job_number,
+                      client_name: proj.client_name,
+                      creator:proj.creator,
+                      updatedAt: proj.updatedAt,
+                      createdAt: proj.createdAt
+                 },
+                 schematic: {
+                      id: proj.Schematic.id,
+                      image_url: proj.Schematic.image_url,
+                      updatedAt: proj.Schematic.updatedAt,
+                      createdAt: proj.Schematic.createdAt
+                 },
+                 pin: obj
+               };
+            }
+           return final;
         });
       }
     res.json(result());
@@ -169,19 +167,19 @@ router.get('/projects/:project_id/gallery', (req,res) => {
     include: [
       {model: Schematics,
         include: [{ model: Pins,
-          include: [{ model: Images, include: [{ model: Users}]}]
+          include: [{ model: Images, include: [{ model: Users }]}]
          }]
       }
     ]
    })
   .then( (pin) => {
-   function result () {
-      return  pin.filter(proj => proj.id === project_id).map( (proj) => {
+    function result () {
+      return  pin.filter( (proj) => proj.id === project_id).map( (proj) => {
         var obj = {};
         proj.Schematic.Pins.map( (pin) => {
            obj = {
-              images: pin.Images,
-            };
+              images: pin.Images
+              };
         });
 
       return obj;
@@ -205,7 +203,7 @@ router.get('/projects/:project_id/comments', (req,res) => {
    })
   .then( (pin) => {
    function result () {
-      return  pin.filter(proj => proj.id === project_id).map( (proj) => {
+      return  pin.filter( (proj) => proj.id === project_id).map( (proj) => {
         var obj = {};
         proj.Schematic.Pins.map( (pin) => {
            obj = {
@@ -226,19 +224,19 @@ router.get('/projects/:project_id/pin/:pin_id', (req,res) => {
    var pin_id = parseInt(req.params.pin_id);
    Projects.findAll({
     include: [
-      {model: Schematics,
+      { model: Schematics,
         include: [{ model: Pins,
-          include: [{ model: Images, include: [{ model: Users}]},{ model: Comments, include: [{ model: Users}]}, {model: Users}]
+          include: [{ model: Images, include: [{ model: Users}]},{ model: Comments, include: [{ model: Users}]}, { model: Users}]
          }]
       }
     ]
    })
   .then( (pin) => {
    function result () {
-        return  pin.filter(proj => proj.id === project_id).map( (proj) => {
+        return  pin.filter( (proj) => proj.id === project_id).map( (proj) => {
 
           var obj = {};
-          proj.Schematic.Pins.filter(pin => pin.id === pin_id).map( (pin) => {
+          proj.Schematic.Pins.filter( (pin) => pin.id === pin_id).map( (pin) => {
 
 
            obj = {
@@ -267,7 +265,7 @@ router.get('/projects/:project_id/pin/:pin_id', (req,res) => {
   });
 });
 
-router.put("/projects/:id/gallery", (req,res) => {
+router.put('/projects/:id/gallery', (req,res) => {
   Projects.update(req.title,
   {
     where: {
@@ -321,6 +319,20 @@ router.post('/images', (req, res) => {
   });
 });
 
+router.delete('/images/:id', (req, res) => {
+  Images.destroy({
+    where: {
+      id: req.params.id
+    }
+  })
+  .then( (data) => {
+    console.log('Deleted Image');
+  })
+  .catch( (err) => {
+    console.log(err);
+  });
+});
+
 router.post('/comments', (req, res) => {
   return Comments.create({
     body: req.body.body,
@@ -329,6 +341,21 @@ router.post('/comments', (req, res) => {
   })
   .then( (body) => {
     return res.json(body);
+  })
+  .catch( (err) => {
+    console.log(err);
+  });
+});
+
+router.delete('/comments/:id', (req, res) => {
+  Comments.destroy({
+    where: {
+      id: req.params.id
+    }
+  })
+  .then( (data) => {
+    console.log('Deleted Comment');
+    res.end();
   })
   .catch( (err) => {
     console.log(err);

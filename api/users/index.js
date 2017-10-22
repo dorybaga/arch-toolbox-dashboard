@@ -33,25 +33,33 @@ const { Comments, Images, Pins, Projects, Schematics, Users } = require('../../m
 //     res.redirect('/');
 //   });
 
-
-router.get('/users', (req, res) => {
-  Users.findAll()
-  .then( (users) => {
-    return res.json(users);
+router.route('/users')
+  .post( (req, res) => {
+    return Users.create({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: req.body.password,
+      user_role: req.body.user_role
+    })
+    .then( (user) => {
+      return res.json(user);
+    });
+  })
+  .get( (req, res) => {
+    Users.findAll()
+    .then( (users) => {
+      return res.json(users);
+    });
   });
-});
 
 router.route('/users/:id')
   .get( (req, res) => {
-    let userId = req.params.id;
-    Users.findById(userId, {
-      attributes: ['id', 'firstName', 'lastName'],
-      include: [
-        {
-          model: Projects,
-          attributes: ['title', 'address']
-        }
-      ]
+    // let userId = req.params.id;
+    Users.findAll({
+      where: {
+        id: req.params.id
+      }
     })
     .then( (result) => {
       res.json(result);
@@ -72,18 +80,6 @@ router.route('/users/:id')
     });
   });
 
-router.post('/users', (req, res) => {
-  return Users.create({
-   firstName: req.body.firstName,
-   lastName: req.body.lastName,
-   email: req.body.email,
-   password: req.body.password,
-   user_role: req.body.user_role
- })
-  .then( (user) => {
-    return res.json(user);
-  });
-});
 
 router.post('/login', (req, res) => {
   return Users.findOne({ where: { email: req.body.email } })

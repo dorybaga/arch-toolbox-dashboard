@@ -34,7 +34,7 @@ router.delete('/projects/:id', (req, res) => {
   });
 });
 
-router.post('/schematics', (req, res) => {
+router.post('/projects/:id/schematics', (req, res) => {
   return Schematics.create({
     image_url: req.body.image_url,
     project_id: parseInt(req.body.project_id)
@@ -47,7 +47,7 @@ router.post('/schematics', (req, res) => {
   });
 });
 
-router.delete('/schematics/:id', (req, res) => {
+router.delete('/projects/:id/schematics/:id', (req, res) => {
   Schematics.destroy({
     where: {
       id: req.params.id
