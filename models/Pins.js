@@ -5,7 +5,6 @@ const Comments = require('./Comments');
 const Users = require('./Users');
 
 
-
 module.exports = function(sequelize, DataTypes) {
   var Pins = sequelize.define("Pins", {
     x: { type: DataTypes.INTEGER, allowNull: false },
