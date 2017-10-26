@@ -10,7 +10,8 @@ router.post('/projects', (req, res) => {
     client_name: req.body.client_name,
     job_number: parseInt(req.body.job_number),
     creator: req.body.creator
-  }).then( (project) => {
+  })
+  .then( (project) => {
       res.json(project.dataValues);
    })
   .catch( (err) => {
@@ -18,13 +19,44 @@ router.post('/projects', (req, res) => {
   });
 });
 
-router.post('/schematics', (req, res) => {
+router.delete('/projects/:id', (req, res) => {
+  Projects.destroy({
+    where: {
+      id: req.params.id
+    }
+  })
+  .then( (data) => {
+    console.log('Deleted Project');
+    res.end();
+  })
+  .catch( (err) => {
+    console.log(err);
+  });
+});
+
+router.post('/projects/:id/schematics', (req, res) => {
   return Schematics.create({
     image_url: req.body.image_url,
     project_id: parseInt(req.body.project_id)
   })
   .then( (schematic) => {
     return res.json(schematic);
+  })
+  .catch( (err) => {
+    console.log(err);
+  });
+});
+
+router.delete('/projects/:id/schematics/:id', (req, res) => {
+  Schematics.destroy({
+    where: {
+      id: req.params.id
+    },
+    include: [{ model: Pins }]
+  })
+  .then( (data) => {
+    console.log('Deleted Schematic');
+    res.end();
   })
   .catch( (err) => {
     console.log(err);
