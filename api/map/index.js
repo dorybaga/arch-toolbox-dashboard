@@ -240,7 +240,6 @@ router.get('/projects/:project_id/pin/:pin_id', (req,res) => {
           var obj = {};
           proj.Schematic.Pins.filter(pin => pin.id === pin_id).map( (pin) => {
 
-
            obj = {
               id: pin.id,
               x: pin.x,
@@ -267,14 +266,27 @@ router.get('/projects/:project_id/pin/:pin_id', (req,res) => {
   });
 });
 
-router.put("/projects/:id/gallery", (req,res) => {
-  Projects.update(req.title,
-  {
+router.put("/projects/comments/:id", (req,res) => {
+  Comments.update({
+    body: req.body.body
+  },{
     where: {
       id: parseInt(req.params.id)
     }
-  });
-  res.end();
+  }).then((data) => {
+      console.log('complete');
+    });
+});
+
+router.put("/projects/photo/:id", (req,res) => {
+  Images.destroy({
+    where: {
+      id: parseInt(req.params.id)
+    }
+  }).then((data) => {
+      console.log('Deleted');
+
+    });
 });
 
 router.get('/schematics', (req,res) => {
@@ -297,7 +309,8 @@ router.post('/pins', (req, res) => {
     isMouseDetected: req.body.isMouseDetected,
     isTouchDetected: req.body.isTouchDetected,
     user_id: parseInt(req.body.user_id),
-    schematic_id: parseInt(req.body.schematic_id)
+    schematic_id: parseInt(req.body.schematic_id),
+    project_id: parseInt(req.body.project_id)
   })
   .then( (pin) => {
     return res.json(pin);
