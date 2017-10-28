@@ -37,25 +37,13 @@ router.route('/users')
     res.redirect('/');
   });
 
-// router.route('/users')
-//   .post( (req, res) => {
-//     return Users.create({
-//       firstName: req.body.firstName,
-//       lastName: req.body.lastName,
-//       email: req.body.email,
-//       password: req.body.password,
-//       user_role: req.body.user_role
-//     })
-//     .then( (user) => {
-//       return res.json(user);
-//     });
-//   })
-//   .get( (req, res) => {
-//     Users.findAll()
-//     .then( (users) => {
-//       return res.json(users);
-//     });
-//   });
+router.route('/users')
+  .get( (req, res) => {
+    Users.findAll()
+    .then( (users) => {
+      return res.json(users);
+    });
+  });
 
 router.route('/users/:id')
   .get( (req, res) => {
@@ -84,8 +72,8 @@ router.route('/users/:id')
     });
   });
 
-
 router.post('/login', (req, res) => {
+  console.log(req.body);
   return Users.findOne({ where: { email: req.body.email } })
   .then( (user) => {
     if (!user) {
@@ -93,7 +81,6 @@ router.post('/login', (req, res) => {
     }
     console.log('Login Successful');
     return res.json(user);
-
   });
 });
 

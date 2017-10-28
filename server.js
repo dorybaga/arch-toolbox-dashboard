@@ -16,7 +16,7 @@ const { Comments, Images, Pins, Projects, Schematics, Users } = require('./model
 const PORT = process.env.PORT || 3000;
 
 app.use(express.static('public'));
-app.use(bp.urlencoded());
+// app.use(bp.urlencoded());
 app.use(bp.json());
 app.use('/api', require('./api/index.js'));
 
@@ -75,8 +75,6 @@ passport.deserializeUser(function (userId, done) {
     done(err, user);
   });
 });
-
-
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
