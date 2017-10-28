@@ -19,5 +19,6 @@
     "database": "foundation_database",
     "host": "127.0.0.1",
     "dialect": "postgres"
-  }
+  },
+  "SESSION_SECRET": "foundation"
 }

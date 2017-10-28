@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { Comments, Images, Pins, Projects, Schematics, Users } = require('../../models');
 
+
 router.get('/projects', (req,res) => {
    var id = parseInt(req.params.id);
    Projects.findAll()
@@ -27,6 +28,7 @@ router.get('/projects', (req,res) => {
     res.json(result());
   });
 });
+
 
 router.delete('/projects/:id', (req,res) => {
   Projects.destroy({
@@ -189,6 +191,7 @@ router.get('/projects/:project_id/gallery', (req,res) => {
  });
 });
 
+
 router.get('/projects/:project_id/comments', (req,res) => {
    var project_id = parseInt(req.params.project_id);
    var pin_id = parseInt(req.params.pin_id);
@@ -319,6 +322,7 @@ router.post('/pins', (req, res) => {
   });
 });
 
+
 router.post('/images', (req, res) => {
   return Images.create({
     image_url: req.body.image_url,
@@ -347,6 +351,7 @@ router.delete('/images/:id', (req, res) => {
   });
 });
 
+
 router.post('/comments', (req, res) => {
   return Comments.create({
     body: req.body.body,
@@ -360,6 +365,7 @@ router.post('/comments', (req, res) => {
     console.log(err);
   });
 });
+
 
 router.delete('/comments/:id', (req, res) => {
   Comments.destroy({
