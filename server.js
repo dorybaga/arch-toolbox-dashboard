@@ -91,3 +91,9 @@ app.listen(PORT, () => {
   // db.sequelize.sync({force:true});
   console.log(`Server running on ${PORT}`);
 });
+
+
+// ALTER TABLE "Pins"
+// ADD CONSTRAINT "Pins_projects_id_fkey" FOREIGN KEY ("project_id")
+// REFERENCES "Projects" (id) MATCH SIMPLE
+// ON DELETE CASCADE;
