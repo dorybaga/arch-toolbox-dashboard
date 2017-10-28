@@ -20,20 +20,25 @@ angular.module('myApp')
         UserService.createUser(newUser)
         .then(user => {
           $scope.user.firstName = '';
-          $scope.user.firstName = '';
+          $scope.user.lastName = '';
           $scope.user.email = '';
           $scope.user.password = '';
           $scope.user.user_role = '';
         });
       };
 
+      $scope.loggedInUserName = localStorage.getItem('loggedInUserName');
+
       $scope.user = { email: '' };
       $scope.login = function () {
         UserService.login($scope.user)
         .then(function (response) {
-          UserService.setUser(response.email);
+          //UserService.setUser(response.email);
+          console.log("TYPE", typeof response);
+          localStorage.removeItem('loggedInUserName');
+          localStorage.setItem('loggedInUserName',response.firstName);
           console.log('Set User', response);
-          $window.location.href = '/';
+          window.location.href = 'http://localhost:3000/';
 
         });
       };
