@@ -12,7 +12,14 @@
     <base href="/">
   </head>
   <body ng-app="myApp">
-     <ng-view></ng-view>
+    <div ng-if="isLoggedIn">
+      <div class="name">Hi, {{ loggedInUserName }}</div>
+    </div>
+
+
+    <ng-view></ng-view>
+
+
     </section>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js" type="text/javascript"></script>

@@ -1,6 +1,6 @@
 
 angular.module('myApp')
-  .controller('userController', ['$scope' , 'UserService', function($scope, UserService) {
+  .controller('userController', ['$scope' , '$window', 'UserService', function($scope, $window, UserService) {
     $scope.user = {
         firstName:'',
         lastName:'',
@@ -19,12 +19,22 @@ angular.module('myApp')
         };
         UserService.createUser(newUser)
         .then(user => {
-          console.log(user.config.data);
           $scope.user.firstName = '';
           $scope.user.firstName = '';
           $scope.user.email = '';
           $scope.user.password = '';
           $scope.user.user_role = '';
+        });
+      };
+
+      $scope.user = { email: '' };
+      $scope.login = function () {
+        UserService.login($scope.user)
+        .then(function (response) {
+          UserService.setUser(response.email);
+          console.log('Set User', response);
+          $window.location.href = '/';
+
         });
       };
 

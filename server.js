@@ -93,7 +93,4 @@ app.listen(PORT, () => {
 });
 
 
-// ALTER TABLE "Pins"
-// ADD CONSTRAINT "Pins_projects_id_fkey" FOREIGN KEY ("project_id")
-// REFERENCES "Projects" (id) MATCH SIMPLE
-// ON DELETE CASCADE;
+
