@@ -27,16 +27,15 @@ angular.module('myApp')
         });
       };
 
-      $scope.user = { email: '' };
-      $scope.login = function () {
-        UserService.login($scope.user)
-        .then(function (response) {
-          UserService.setUser(response.email);
-          console.log('Set User', response);
-          $window.location.href = '/';
+      // $scope.user = { firstName: '' };
+      // $scope.login = function () {
+      //   UserService.login($scope.user)
+      //   .then(function (response) {
+      //     UserService.setUser(response.firstName);
+      //     $window.location.href = '/';
 
-        });
-      };
+      //   });
+      // };
 
 
 }]);

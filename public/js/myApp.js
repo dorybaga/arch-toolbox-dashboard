@@ -9,7 +9,7 @@ angular.module('myApp')
       })
       .when('/login', {
         templateUrl: 'login.html',
-        controller: 'userController'
+        controller: 'loginController'
       })
       .otherwise({ redirectTo: '/' });
 
