@@ -13,8 +13,19 @@
   </head>
   <body ng-app="myApp">
     <div ng-controller="userController">
-      <div class="name">Hi, {{loggedInUserName}}</div>
-    </div>
+     <section class="hero is-primary">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title has-text-black has-text-weight-semibold">
+          </h1>
+          <h2 class="subtitle has-text-weight-light" ng-if="loggedInUserName" >
+            Logged In as <span class=" has-text-black">{{loggedInUserName}}</span>
+          </h2>
+        </div>
+      </div>
+      </section>
+
+
 
 
     <ng-view></ng-view>
