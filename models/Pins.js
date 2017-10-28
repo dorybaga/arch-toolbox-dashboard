@@ -3,6 +3,7 @@ const Schematics = require('./Schematics');
 const Images = require('./Images');
 const Comments = require('./Comments');
 const Users = require('./Users');
+const Projects = require('./Projects');
 
 
 module.exports = function(sequelize, DataTypes) {
@@ -41,6 +42,14 @@ module.exports = function(sequelize, DataTypes) {
       {
         foreignKey: {
           name: 'user_id',
+          allowNull: false
+        }
+      });
+
+    Pins.belongsTo(models.Projects,
+      {
+        foreignKey: {
+          name: 'project_id',
           allowNull: false
         }
       });

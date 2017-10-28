@@ -1,6 +1,7 @@
 const sequelize = require('sequelize');
 const Schematics = require('./Schematics');
 const Users = require('./Users');
+const Pins = require('./Pins');
 
 
 
@@ -31,6 +32,15 @@ module.exports = function(sequelize, DataTypes) {
           allowNull: false
         },
         onDelete: 'CASCADE'
+      });
+    Projects.hasMany(models.Pins,
+      {
+        foreignKey: {
+          name: 'project_id',
+          allowNull: false
+        },
+        onDelete: 'CASCADE',
+        hooks: true
       });
 
   };
