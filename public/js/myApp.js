@@ -9,23 +9,13 @@ angular.module('myApp')
       })
       .when('/login', {
         templateUrl: 'login.html',
-        controller: 'loginController'
+        controller: 'userController'
       })
       .otherwise({ redirectTo: '/' });
 
       $locationProvider.html5Mode(true);
   }])
-  .run(['$rootScope', '$window','UserService', function ($rootScope, $window, UserService) {
-      $rootScope.isLoggedIn = localStorage.loggedIn;
-      $rootScope.loggedInUser = localStorage.user_id;
-      $rootScope.loggedInUserName = localStorage.user.email;
-
-      $rootScope.logout = function () {
-        UserService.logout();
-        $window.location.href = '/';
-      };
-    }
-  ]);
+  .run();
 
 
 

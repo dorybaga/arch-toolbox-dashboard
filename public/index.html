@@ -12,8 +12,8 @@
     <base href="/">
   </head>
   <body ng-app="myApp">
-    <div ng-if="isLoggedIn">
-      <div class="name">Hi, {{ loggedInUserName }}</div>
+    <div ng-controller="userController">
+      <div class="name">Hi, {{loggedInUserName}}</div>
     </div>
 
 

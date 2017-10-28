@@ -16,7 +16,6 @@ angular.module('myApp')
     },
 
     setUser: function (user) {
-      localStorage.setItem('user_id', user.id);
       localStorage.setItem('user', user.email);
       localStorage.setItem('loggedIn', true);
     },
