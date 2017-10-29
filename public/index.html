@@ -28,6 +28,7 @@
         <ul>
             <li ng-if="loggedInUserName"><a ng-href="/home">Home</a></li>
             <li ng-if="!loggedInUserName"><a ng-href="/login">Log In</a></li>
+            <li ng-if="loggedInUserName"><a ng-click="logout()">Log Out</a></li>
             <li ng-if="!loggedInUserName"><a ng-href="/create-user">Create User</a></li>
             <li ng-if="loggedInUserName"><a ng-href="/create-project">Create-project</a></li>
         </ul>

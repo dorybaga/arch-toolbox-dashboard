@@ -1,1 +1,13 @@
-<div>CREATE PROJECT</div>
+<h1>Create Project</h1>
+
+<div>
+  <input class="input" type="text" placeholder= 'Project Title' ng-model='project.title'>
+  <input class="input" type="text" placeholder= 'Address' ng-model='project.address'>
+  <input class="input" type="text" placeholder= 'Job Number' ng-model='project.job_number'>
+  <input class="input" type="text" placeholder= "Client's Name" ng-model='project.client_name'>
+  <input class="input" type="text" placeholder= 'Created By' ng-model='project.creator'>
+
+  <button ng-click='createProject()'>Create Project</button>
+</div>
+
+
