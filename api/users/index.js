@@ -22,7 +22,8 @@ router.route('/users')
               lastName: req.body.lastName,
               email: req.body.email,
               password: hash,
-              user_role: req.body.user_role
+              user_role: req.body.user_role,
+              project_id: "1"
             }).then( () => {
               console.log('Inserted new user');
               res.end();
