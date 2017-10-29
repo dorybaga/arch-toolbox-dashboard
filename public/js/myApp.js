@@ -15,6 +15,10 @@ angular.module('myApp')
         templateUrl: 'login.html',
         controller: 'userController'
       })
+      .when('/create-project', {
+        templateUrl: 'CreateProject.html',
+        controller: 'CreateProjectController'
+      })
       .otherwise({ redirectTo: '/home' });
 
       $locationProvider.html5Mode(true);

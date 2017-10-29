@@ -24,6 +24,17 @@
         </div>
       </div>
       </section>
+      <nav class="tabs is-centered is-clipped">
+        <!-- <div class= "container">
+          <div ng-switch="{{log}}">
+           <div ng-switch-when="true" ng-controller="topicController" > -->
+              <ul>
+                <li><a ng-href="/home">Home</a></li>
+                <li><a ng-href="/login">Log In</a></li>
+                <li><a ng-href="/create-user">Create User</a></li>
+             <li><a ng-href="/create-project">Create-project</a></li>
+            </ul>
+       </nav>
 
 
 
@@ -39,5 +50,7 @@
     <script src="./js/services/userService.js" type="text/javascript"></script>
     <script src="./js/controllers/HomeController.js" type="text/javascript"></script>
     <script src="./js/services/HomeService.js" type="text/javascript"></script>
+    <script src="./js/controllers/CreateProjectController.js" type="text/javascript"></script>
+    <script src="./js/services/CreateProjectService.js" type="text/javascript"></script>
   </body>
 </html>

@@ -34,12 +34,10 @@ angular.module('myApp')
       $scope.login = function () {
         UserService.login($scope.user)
         .then(function (response) {
-          //UserService.setUser(response.email);
-          console.log("TYPE", typeof response);
           localStorage.removeItem('loggedInUserName');
           localStorage.setItem('loggedInUserName',response.firstName);
           console.log('Set User', response);
-          window.location.href = 'http://localhost:3000/';
+          window.location.href = '/';
 
         });
       };
