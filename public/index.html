@@ -24,28 +24,16 @@
         </div>
       </div>
       </section>
-<<<<<<< HEAD
-      <nav class="breadcrumb is-centered">
-        <ul>
-          <li ng-if="loggedInUserName"><a ng-click="logout()">Logout</a></li>
-          <li ng-if="!loggedInUserName"><a ng-href="/create-user">Register</a></li>
-          <li ng-if="!loggedInUserName"><a ng-href="/login">Login</a></li>
-        </ul>
-      </nav>
-    </div>
-=======
       <nav class="tabs is-centered is-clipped">
-        <!-- <div class= "container">
-          <div ng-switch="{{log}}">
-           <div ng-switch-when="true" ng-controller="topicController" > -->
-              <ul>
-                <li><a ng-href="/home">Home</a></li>
-                <li><a ng-href="/login">Log In</a></li>
-                <li><a ng-href="/create-user">Create User</a></li>
-             <li><a ng-href="/create-project">Create-project</a></li>
-            </ul>
+        <ul>
+            <li ng-if="loggedInUserName"><a ng-href="/home">Home</a></li>
+            <li ng-if="!loggedInUserName"><a ng-href="/login">Log In</a></li>
+            <li ng-if="!loggedInUserName"><a ng-href="/create-user">Create User</a></li>
+            <li ng-if="loggedInUserName"><a ng-href="/create-project">Create-project</a></li>
+        </ul>
        </nav>
->>>>>>> fe36a6705f57eff8e0150b2b19b6e49b06b11b51
+    </div>
+
 
 
 
