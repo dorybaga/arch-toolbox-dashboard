@@ -1,4 +1,3 @@
-
 angular.module('myApp')
   .controller('userController', ['$scope' , '$window', 'UserService', function($scope, $window, UserService) {
     $scope.user = {
@@ -17,6 +16,7 @@ angular.module('myApp')
           password:$scope.user.password,
           user_role:$scope.user.user_role
         };
+
         UserService.createUser(newUser)
         .then(user => {
           $scope.user.firstName = '';
@@ -37,10 +37,9 @@ angular.module('myApp')
           //UserService.setUser(response.email);
           console.log("TYPE", typeof response);
           localStorage.removeItem('loggedInUserName');
-          localStorage.setItem('loggedInUserName',response.firstName);
+          localStorage.setItem('loggedInUserName', response.firstName);
           console.log('Set User', response);
           window.location.href = 'http://localhost:3000/';
-
 
         });
       };
