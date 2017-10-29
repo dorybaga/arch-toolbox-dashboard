@@ -1,0 +1,14 @@
+<h1>HELLO WORLD</h1>
+<br>
+<br>
+<i class="button is-right fa fa-plus "></i>
+<article class="message is-primary is-small"  ng-repeat = "project in projects | orderBy:'time':true">
+  <div class="message-header">
+    <p> Created by: {{project.creator}}</p>
+  </div>
+  <div class="message-body" >
+    {{project.body}}
+  </div>
+</article>
+
+<!-- <br>{{project.createdAt| date: "EEE, MMM d, y h:mm:ss a" }} -->
