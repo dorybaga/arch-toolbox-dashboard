@@ -30,19 +30,22 @@ angular.module('myApp')
 
 
       $scope.loggedInUserName = localStorage.getItem('loggedInUserName');
-
       $scope.user = { email: '' };
       $scope.login = function () {
         UserService.login($scope.user)
         .then(function (response) {
           //UserService.setUser(response.email);
-          console.log("TYPE", typeof response);
           localStorage.removeItem('loggedInUserName');
           localStorage.setItem('loggedInUserName', response.firstName);
-          console.log('Set User', response);
           window.location.href = 'http://localhost:3000/';
-
         });
+      };
+
+
+       $scope.logout = function () {
+          localStorage.removeItem('loggedInUserName');
+          localStorage.setItem('loggedInUserName', '');
+          window.location.href = '/login';
       };
 
 

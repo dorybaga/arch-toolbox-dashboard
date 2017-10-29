@@ -19,11 +19,19 @@
           <h1 class="title has-text-black has-text-weight-semibold">
           </h1>
           <h2 class="subtitle has-text-weight-light" ng-if="loggedInUserName" >
-            Logged In as <span class=" has-text-black">{{loggedInUserName}}</span>
+            Logged In As <span class=" has-text-black">{{loggedInUserName}}</span>
           </h2>
         </div>
       </div>
       </section>
+      <nav class="breadcrumb is-centered">
+        <ul>
+          <li ng-if="loggedInUserName"><a ng-click="logout()">Logout</a></li>
+          <li ng-if="!loggedInUserName"><a ng-href="/create-user">Register</a></li>
+          <li ng-if="!loggedInUserName"><a ng-href="/login">Login</a></li>
+        </ul>
+      </nav>
+    </div>
 
 
 

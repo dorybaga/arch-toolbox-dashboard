@@ -59,7 +59,7 @@ router.get('/projects/:id', (req,res) => {
     include: [
       {model: Schematics,
         include: [{ model: Pins,
-          include: [{ model: Images, include: [{ model: Users}]},{ model: Comments, include: [{ model: Users}]}, {model: Users}]
+          include: [{ model: Images, include: [{ model: Users}]}, { model: Comments, include: [{ model: Users}]}, {model: Users}]
          }]
       }
     ]
