@@ -1,4 +1,3 @@
-
 angular.module('myApp')
   .controller('userController', ['$scope' , '$window', 'UserService', function($scope, $window, UserService) {
     $scope.user = {
@@ -18,6 +17,7 @@ angular.module('myApp')
           user_role:$scope.user.user_role,
           project_id: "1"
         };
+
         UserService.createUser(newUser)
         .then(user => {
           $scope.user.firstName = '';
@@ -28,18 +28,25 @@ angular.module('myApp')
         });
       };
 
-      $scope.loggedInUserName = localStorage.getItem('loggedInUserName');
 
+      $scope.loggedInUserName = localStorage.getItem('loggedInUserName');
       $scope.user = { email: '' };
       $scope.login = function () {
         UserService.login($scope.user)
         .then(function (response) {
           localStorage.removeItem('loggedInUserName');
+          localStorage.setItem('loggedInUserName', response.firstName);
+          localStorage.removeItem('loggedInUserName');
           localStorage.setItem('loggedInUserName',response.firstName);
-          console.log('Set User', response);
           window.location.href = '/';
-
         });
+      };
+
+
+       $scope.logout = function () {
+          localStorage.removeItem('loggedInUserName');
+          localStorage.setItem('loggedInUserName', '');
+          window.location.href = '/login';
       };
 
 

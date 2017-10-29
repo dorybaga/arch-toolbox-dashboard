@@ -15,11 +15,6 @@ angular.module('myApp')
       });
     },
 
-    setUser: function (user) {
-      localStorage.setItem('user', user.email);
-      localStorage.setItem('loggedIn', true);
-    },
-
     logout: function () {
       localStorage.removeItem('user_id');
       localStorage.removeItem('user');
