@@ -162,34 +162,34 @@ router.get('/projects/:id', (req,res) => {
 });
 
 
-router.get('/projects/:project_id/gallery', (req,res) => {
-   var project_id = parseInt(req.params.project_id);
-   var pin_id = parseInt(req.params.pin_id);
-   Projects.findAll({
-    include: [
-      {model: Schematics,
-        include: [{ model: Pins,
-          include: [{ model: Images, include: [{ model: Users }]}]
-         }]
-      }
-    ]
-   })
-  .then( (pin) => {
-    function result () {
-      return  pin.filter( (proj) => proj.id === project_id).map( (proj) => {
-        var obj = {};
-        proj.Schematic.Pins.map( (pin) => {
-           obj = {
-              images: pin.Images
-              };
-        });
+// router.get('/projects/:project_id/gallery', (req,res) => {
+//    var project_id = parseInt(req.params.project_id);
+//    var pin_id = parseInt(req.params.pin_id);
+//    Projects.findAll({
+//     include: [
+//       {model: Schematics,
+//         include: [{ model: Pins,
+//           include: [{ model: Images, include: [{ model: Users }]}]
+//          }]
+//       }
+//     ]
+//    })
+//   .then( (pin) => {
+//     function result () {
+//       return  pin.filter( (proj) => proj.id === project_id).map( (proj) => {
+//         var obj = {};
+//         proj.Schematic.Pins.map( (pin) => {
+//            obj = {
+//               images: pin.Images
+//               };
+//         });
 
-      return obj;
-      });
-    }
-  res.json(result());
- });
-});
+//       return obj;
+//       });
+//     }
+//   res.json(result());
+//  });
+// });
 
 
 router.get('/projects/:project_id/comments', (req,res) => {
@@ -245,12 +245,6 @@ router.get('/projects/:project_id/pin/:pin_id', (req,res) => {
               id: pin.id,
               x: pin.x,
               y: pin.y,
-              isActive: pin.isActive,
-              width: pin.width,
-              height: pin.height,
-              isPositionOutside: pin.isPositionOutside,
-              isMouseDetected: pin.isMouseDetected,
-              isTouchDetected: pin.isTouchDetected,
               createdAt: pin.createdAt,
               updatedAt: pin.updatedAt,
               schematic_id: pin.schematic_id,
@@ -304,15 +298,9 @@ router.post('/pins', (req, res) => {
   return Pins.create({
     x: parseInt(req.body.x),
     y: parseInt(req.body.y),
-    isActive: req.body.isActive,
-    width: parseInt(req.body.width),
-    height: parseInt(req.body.height),
-    isPositionOutside: req.body.isPositionOutside,
-    isMouseDetected: req.body.isMouseDetected,
-    isTouchDetected: req.body.isTouchDetected,
     user_id: parseInt(req.body.user_id),
-    schematic_id: parseInt(req.body.schematic_id),
-    project_id: parseInt(req.body.project_id)
+    schematic_id: parseInt(req.body.schematic_id)
+    // project_id: parseInt(req.body.project_id)
   })
   .then( (pin) => {
     return res.json(pin);
