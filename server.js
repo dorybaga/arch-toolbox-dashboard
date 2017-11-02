@@ -11,7 +11,7 @@ const bcrypt = require('bcrypt');
 const app = express();
 
 const db = require('./models');
-const { Comments, Images, Pins, Projects, Schematics, Users } = require('./models');
+const { Comments, Images, Pins, Projects, Schematics, Users, UserProjectJoin } = require('./models');
 
 const PORT = process.env.PORT || 3000;
 

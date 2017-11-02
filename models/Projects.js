@@ -4,9 +4,6 @@ const Users = require('./Users');
 const Pins = require('./Pins');
 
 
-
-
-
 module.exports = function(sequelize, DataTypes) {
   var Projects = sequelize.define("Projects", {
     title: { type: DataTypes.TEXT, allowNull: false },
@@ -21,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
     Projects.belongsToMany(models.Users,
       {
         as: 'Projects',
-        through: 'users_projects',
+        through: 'UserProjectJoin',
         foreignKey: 'project_id'
       });
 
