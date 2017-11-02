@@ -54,6 +54,7 @@ passport.use(new LocalStrategy (
     })
     .catch( (err) => {
       console.log(err);
+      return done(null, false, { message: 'Incorrect Username' });
     });
   }
 ));
