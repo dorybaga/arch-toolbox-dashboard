@@ -39,6 +39,7 @@ passport.use(new LocalStrategy (
           .then( (result) => {
             if (result) {
               console.log('Username and password correct!');
+              console.log(user);
               return done(null, user);
             } else {
               console.log('Password does not match');

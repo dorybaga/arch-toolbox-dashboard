@@ -74,13 +74,13 @@ router.route('/users/:id')
   });
 
 router.post('/login', (req, res) => {
-  console.log(req.body);
   return Users.findOne({ where: { email: req.body.email } })
   .then( (user) => {
     if (!user) {
       return res.json('Invalid Login');
     }
     console.log('Login Successful');
+    console.log(user);
     return res.json(user);
   });
 });
