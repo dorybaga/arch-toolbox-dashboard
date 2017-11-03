@@ -66,6 +66,8 @@ router.get('/upload', (req, res) => {
 });
 
 router.post('/upload', upload.single('image'), (req, res) => {
+  console.log("/upload");
+
   fotoBucket.upload(req.file, function(err, data){
     if (err) {
       console.log(err);

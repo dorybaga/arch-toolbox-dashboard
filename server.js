@@ -16,7 +16,7 @@ const { Comments, Images, Pins, Projects, Schematics, Users, UserProjectJoin } =
 const PORT = process.env.PORT || 3000;
 
 app.use(express.static('public'));
-// app.use(bp.urlencoded());
+app.use(bp.urlencoded());
 app.use(bp.json());
 app.use('/api', require('./api/index.js'));
 
@@ -90,7 +90,7 @@ app.get('*', (req, res) => {
 
 app.listen(PORT, () => {
   db.sequelize.sync();
-  // db.sequelize.sync({force:true});
+  //db.sequelize.sync({force:true});
   console.log(`Server running on ${PORT}`);
 });
 

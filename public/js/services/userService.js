@@ -20,7 +20,7 @@ angular.module('myApp')
       localStorage.removeItem('user');
       localStorage.setItem('loggedIn', '');
     }
-    };
+   };
   }
 ]);
 
