@@ -11,12 +11,16 @@ angular.module('myApp')
         templateUrl: 'createUser.html',
         controller: 'userController'
       })
-      .when('/login', {
-        templateUrl: 'login.html',
+      .when('/upload', {
+        templateUrl: 'upload.html',
         controller: 'userController'
       })
       .when('/create-project', {
         templateUrl: 'CreateProject.html',
+        controller: 'CreateProjectController'
+      })
+      .when('/dashboard', {
+        templateUrl: 'dashboard.html',
         controller: 'CreateProjectController'
       })
       .otherwise({ redirectTo: '/home' });
