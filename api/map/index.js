@@ -75,8 +75,11 @@ router.get("/upload", (req, res) => {
   res.sendFile(__dirname + "../../public/upload.html");
 });
 
-router.post("/upload", upload.single("image"), (req, res) => {
-  fotoBucket.upload(req.file, function(err, data) {
+
+router.post('/upload', upload.single('image'), (req, res) => {
+  console.log("/upload");
+
+  fotoBucket.upload(req.file, function(err, data){
     if (err) {
       console.log(err);
       res.send("Something went wrong");
@@ -388,6 +391,7 @@ router.post("/pins", (req, res) => {
     x: parseInt(req.body.x),
     y: parseInt(req.body.y),
     user_id: parseInt(req.body.user_id),
+
     schematic_id: parseInt(req.body.schematic_id),
     project_id: parseInt(req.body.project_id)
   })
@@ -454,6 +458,23 @@ router.delete("/comments/:id", (req, res) => {
     .catch(err => {
       console.log(err);
     });
+});
+
+
+router.post('/projects/:id/schematics', upload.single('image'), (req, res) => {
+  fotoBucket.upload(req.file, function(err, data){
+    if (err) {
+      console.log(err);
+      res.send('Something went wrong');
+    }else{
+      console.log(data);
+      var url = s3.getSignedUrl('getObject', {Bucket: BUCKET_NAME, Key: data.Key});
+      console.log('signed url', url);
+      newImageUpload(data.Location);
+      // res.send(`<html><body><img src=${url}></body></html>`)
+      res.redirect('/upload');
+    }
+  });
 });
 
 module.exports = router;

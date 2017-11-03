@@ -22,8 +22,7 @@ router.route('/users')
               lastName: req.body.lastName,
               email: req.body.email,
               password: hash,
-              user_role: req.body.user_role,
-              project_id: 1
+              user_role: req.body.user_role
             }).then( () => {
               console.log('Inserted new user');
               res.end();
@@ -96,13 +95,11 @@ function userAuthenticated (req, res, next) {
   }
 }
 
-// router.route('/')
+// router.route('/login')
 //   .post(passport.authenticate('local', {
 //     successRedirect: '/new',
 //     failureRedirect: '/create'
 //   }));
-
-
 
 
 module.exports = router;

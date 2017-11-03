@@ -34,7 +34,7 @@ router.delete('/projects/:id', (req, res) => {
   });
 });
 
-router.post('/projects/:id/schematics', (req, res) => {
+router.post('/schematics', (req, res) => {
   return Schematics.create({
     image_url: req.body.image_url,
     project_id: parseInt(req.body.project_id)
@@ -47,21 +47,22 @@ router.post('/projects/:id/schematics', (req, res) => {
   });
 });
 
-router.delete('/projects/:id/schematics/:id', (req, res) => {
-  Schematics.destroy({
-    where: {
-      id: req.params.id
-    },
-    include: [{ model: Pins }]
-  })
-  .then( (data) => {
-    console.log('Deleted Schematic');
-    res.end();
-  })
-  .catch( (err) => {
-    console.log(err);
-  });
-});
+// router.delete('/projects/:id/schematics/:id', (req, res) => {
+//   Schematics.destroy({
+//     where: {
+//       id: req.params.id
+//     },
+//     include: [{ model: Pins }]
+//   })
+//   .then( (data) => {
+//     console.log('Deleted Schematic');
+//     res.end();
+//   })
+//   .catch( (err) => {
+//     console.log(err);
+//   });
+// });
+
 
 router.post('/projects/:id/members', (req, res) => {
   return UserProjectJoin.create({
