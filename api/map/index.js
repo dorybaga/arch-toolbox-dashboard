@@ -66,6 +66,8 @@ router.get('/upload', (req, res) => {
 });
 
 router.post('/upload', upload.single('image'), (req, res) => {
+  console.log("/upload");
+
   fotoBucket.upload(req.file, function(err, data){
     if (err) {
       console.log(err);
@@ -372,8 +374,8 @@ router.post('/pins', (req, res) => {
     x: parseInt(req.body.x),
     y: parseInt(req.body.y),
     user_id: parseInt(req.body.user_id),
+    project_id: parseInt(req.body.project_id),
     schematic_id: parseInt(req.body.schematic_id)
-    // project_id: parseInt(req.body.project_id)
   })
   .then( (pin) => {
     return res.json(pin);
