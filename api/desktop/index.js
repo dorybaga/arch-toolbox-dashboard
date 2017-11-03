@@ -47,21 +47,22 @@ router.post('/projects/:id/schematics', (req, res) => {
   });
 });
 
-router.delete('/projects/:id/schematics/:id', (req, res) => {
-  Schematics.destroy({
-    where: {
-      id: req.params.id
-    },
-    include: [{ model: Pins }]
-  })
-  .then( (data) => {
-    console.log('Deleted Schematic');
-    res.end();
-  })
-  .catch( (err) => {
-    console.log(err);
-  });
-});
+// router.delete('/projects/:id/schematics/:id', (req, res) => {
+//   Schematics.destroy({
+//     where: {
+//       id: req.params.id
+//     },
+//     include: [{ model: Pins }]
+//   })
+//   .then( (data) => {
+//     console.log('Deleted Schematic');
+//     res.end();
+//   })
+//   .catch( (err) => {
+//     console.log(err);
+//   });
+// });
+
 
 router.post('/projects/:id/members', (req, res) => {
   return UserProjectJoin.create({
