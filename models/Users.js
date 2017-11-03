@@ -19,7 +19,7 @@ module.exports = function(sequelize, DataTypes) {
     Users.belongsToMany(models.Projects,
       {
         as: 'Users',
-        through: 'users_projects',
+        through: 'UserProjectJoin',
         foreignKey: 'user_id'
       });
     };

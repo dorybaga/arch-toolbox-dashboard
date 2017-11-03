@@ -23,7 +23,7 @@ router.route('/users')
               email: req.body.email,
               password: hash,
               user_role: req.body.user_role,
-              project_id: "1"
+              project_id: 1
             }).then( () => {
               console.log('Inserted new user');
               res.end();
@@ -74,16 +74,35 @@ router.route('/users/:id')
   });
 
 router.post('/login', (req, res) => {
-  console.log(req.body);
   return Users.findOne({ where: { email: req.body.email } })
   .then( (user) => {
     if (!user) {
       return res.json('Invalid Login');
     }
     console.log('Login Successful');
+    console.log(user);
     return res.json(user);
   });
 });
+
+// Check if user is valid
+function userAuthenticated (req, res, next) {
+  if (req.isAuthenticated()) {
+    console.log('User is good');
+    next();
+  } else {
+    console.log('User not good');
+    res.redirect('/user');
+  }
+}
+
+// router.route('/')
+//   .post(passport.authenticate('local', {
+//     successRedirect: '/new',
+//     failureRedirect: '/create'
+//   }));
+
+
 
 
 module.exports = router;

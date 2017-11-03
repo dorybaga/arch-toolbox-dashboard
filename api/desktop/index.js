@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Comments, Images, Pins, Projects, Schematics, Users } = require('../../models');
+const { Comments, Images, Pins, Projects, Schematics, Users, UserProjectJoin } = require('../../models');
 
 
 router.post('/projects', (req, res) => {
@@ -57,6 +57,19 @@ router.delete('/projects/:id/schematics/:id', (req, res) => {
   .then( (data) => {
     console.log('Deleted Schematic');
     res.end();
+  })
+  .catch( (err) => {
+    console.log(err);
+  });
+});
+
+router.post('/projects/:id/members', (req, res) => {
+  return UserProjectJoin.create({
+    project_id: req.params.project_id,
+    user_id: req.params.user_id
+  })
+  .then( (joint) => {
+    return res.json(joint);
   })
   .catch( (err) => {
     console.log(err);
