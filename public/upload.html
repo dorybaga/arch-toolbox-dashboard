@@ -1,4 +1,4 @@
-<div class="field">
+<!-- <div class="field">
   <label class="label">Log In</label>
   <div class="control has-icons-left has-icons-right">
     <input class="input" type="text" placeholder="Email" ng-model="user.email">
@@ -16,4 +16,12 @@
     ng-click="login()">
     Login
   </button>
-</div>
+</div> -->
+
+
+  <body>
+    <form method="POST" action="/upload" enctype="multipart/form-data">
+      <input type="file" name="image" accept="image/*">
+      <input type="submit">
+    </form>
+  </body>

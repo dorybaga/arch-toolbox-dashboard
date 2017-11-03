@@ -6,6 +6,12 @@ angular.module('myApp')
         .then(function (project) {
           return project;
         });
+      },
+       getProjectById: function (id) {
+        return $http.get(`/api/projects/${id}`)
+        .then(function (project) {
+          return project;
+        });
       }
     };
   }
