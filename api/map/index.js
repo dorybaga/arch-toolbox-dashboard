@@ -76,8 +76,7 @@ router.get("/upload", (req, res) => {
 });
 
 
-router.post('/upload', upload.single('image'), (req, res) => {
-  console.log("/upload");
+router.post('/projects/:id/schematics', upload.single('image'), (req, res) => {
 
   fotoBucket.upload(req.file, function(err, data){
     if (err) {
@@ -94,8 +93,13 @@ router.post('/upload', upload.single('image'), (req, res) => {
       // res.send(`<html><body><img src=${url}></body></html>`)
       res.redirect("/upload");
     }
+      return Schematics.create({
+        image_url: data.Location,
+        project_id: parseInt(req.params.id)
+      });
+    });
   });
-});
+
 
 router.get("/projects", (req, res) => {
   var id = parseInt(req.params.id);
