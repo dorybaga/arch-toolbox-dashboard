@@ -28,6 +28,8 @@ angular.module('myApp')
         });
       };
 
+      $scope.project_id = localStorage.getItem('currentProject');
+
 
       $scope.loggedInUserName = localStorage.getItem('loggedInUserName');
       $scope.user = { email: '' };
