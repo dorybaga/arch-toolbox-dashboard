@@ -11,7 +11,7 @@ angular.module('myApp')
         templateUrl: 'createUser.html',
         controller: 'userController'
       })
-      .when('/upload', {
+      .when('/projects/:id/schematics', {
         templateUrl: 'upload.html',
         controller: 'userController'
       })
