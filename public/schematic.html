@@ -1,17 +1,16 @@
-<div>
+<div ng-controller="UserController">
 <form method="POST" action="{{'/api/projects/' + project_id + '/schematics'}}" enctype="multipart/form-data">
   <input type="file" name="image" accept="image/*">
   <input type="submit">
 </form>
+</div>
 <br>
 
 
-    <div>
-      <div>{{ project.title }}</div>
-      <div>Address: {{ project.address }}</div>
-      <div>Created: {{ project.createdAt | date : "medium" }}</div>
-      <div>By: {{ project.creator }}</div>
-    </div>
+  <div ng-controller="SchematicController">
+    <div>{{ project.title }}</div>
+    <div>Address: {{ project.address }}</div>
+    <div>Created: {{ project.createdAt | date : "medium" }}</div>
+    <div>By: {{ project.creator }}</div>
+  </div>
 
-
-</div>

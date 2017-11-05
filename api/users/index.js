@@ -82,21 +82,11 @@ router.post('/login', (req, res) => {
   });
 });
 
-// Check if user is valid
-function userAuthenticated (req, res, next) {
-  if (req.isAuthenticated()) {
-    console.log('User is good');
-    next();
-  } else {
-    console.log('User not good');
-    res.redirect('/user');
-  }
-}
 
-// router.route('/login')
+// router.route('/')
 //   .post(passport.authenticate('local', {
-//     successRedirect: '/new',
-//     failureRedirect: '/create'
+//     successRedirect: '/home',
+//     failureRedirect: '/create-user'
 //   }));
 
 

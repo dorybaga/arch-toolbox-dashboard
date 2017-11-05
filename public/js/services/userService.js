@@ -11,6 +11,7 @@ angular.module('myApp')
     login: function (user) {
       return $http.post('/api/login', user)
       .then(function (response) {
+        console.log(response);
         return response.data;
       });
     },

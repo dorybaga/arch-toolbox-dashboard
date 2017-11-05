@@ -10,13 +10,16 @@ angular.module('myApp')
        getProjectById: function (id) {
         return $http.get('/api/projects/' + id)
         .then(function (project) {
-          console.log(project.data);
-          return project.data;
+          project.data.map(project => {
+            console.log('Project by id', project.project);
+            return project.project;
+          });
         });
       },
        getProjects: function () {
         return $http.get('/api/projects')
         .then(function (projects) {
+          // console.log('Data', projects.data);
           return projects.data;
         });
       }

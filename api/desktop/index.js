@@ -124,18 +124,6 @@ router.post('/projects/:id/schematics', upload.single('image'), (req, res) => {
     });
   });
 
-// router.post('/schematics', (req, res) => {
-//   return Schematics.create({
-//     image_url: req.body.image_url,
-//     project_id: parseInt(req.body.project_id)
-//   })
-//   .then( (schematic) => {
-//     return res.json(schematic);
-//   })
-//   .catch( (err) => {
-//     console.log(err);
-//   });
-// });
 
 router.delete('/projects/:id/schematics/:id', (req, res) => {
   Schematics.destroy({

@@ -6,6 +6,10 @@ const methodOverride = require('method-override');
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const RedisStore = require('connect-redis')(session);
+const CONFIG = require('./config/config.json');
+
+
 const bcrypt = require('bcrypt');
 
 const app = express();
@@ -28,6 +32,17 @@ app.use(express.static('public'));
 app.use(bp.urlencoded());
 app.use(bp.json());
 app.use('/api', require('./api/index.js'));
+
+// Redis Sessions
+app.use(session ({
+  store: new RedisStore(),
+  secret: CONFIG.SESSION_SECRET,
+  name: 'foundation_session',
+  cookie: {
+    maxAge: 1000000,
+  },
+  saveUninitialized: true
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());

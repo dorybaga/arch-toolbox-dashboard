@@ -15,15 +15,15 @@ angular.module('myApp')
         templateUrl: 'login.html',
         controller: 'UserController'
       })
-      .when('/projects/:id', {
-        templateUrl: 'schematic.html',
-        controller: 'HomeController'
-      })
       .when('/projects/:id/schematics', {
-        templateUrl: 'upload.html',
-        controller: 'UserController'
+        templateUrl: 'schematic.html',
+        controller: 'SchematicController'
       })
-      .when('/create-project', {
+      // .when('/projects/:id/schematics', {
+      //   templateUrl: 'upload.html',
+      //   controller: 'UserController'
+      // })
+      .when('/create-project',  {
         templateUrl: 'CreateProject.html',
         controller: 'CreateProjectController'
       })
