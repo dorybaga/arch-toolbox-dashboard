@@ -1,5 +1,5 @@
 angular.module('myApp')
-  .controller('userController', ['$scope' , '$window', 'UserService', function($scope, $window, UserService) {
+  .controller('UserController', ['$scope' , '$window', 'UserService', function($scope, $window, UserService) {
     $scope.user = {
         firstName:'',
         lastName:'',
@@ -8,7 +8,7 @@ angular.module('myApp')
         user_role:''
       };
 
-      $scope.createUser = function(){
+      $scope.createUser = function() {
         newUser ={
           firstName:$scope.user.firstName,
           lastName:$scope.user.lastName,
@@ -26,10 +26,10 @@ angular.module('myApp')
           $scope.user.password = '';
           $scope.user.user_role = '';
         });
+        window.location.href = '/login';
       };
 
       $scope.project_id = localStorage.getItem('currentProject');
-
 
       $scope.loggedInUserName = localStorage.getItem('loggedInUserName');
       $scope.user = { email: '' };
@@ -40,16 +40,15 @@ angular.module('myApp')
           localStorage.setItem('loggedInUserName', response.firstName);
           localStorage.removeItem('loggedInUserName');
           localStorage.setItem('loggedInUserName',response.firstName);
-          window.location.href = '/';
+          // window.location.href = '/';
+          window.location.href = '/home';
+
         });
       };
-
 
        $scope.logout = function () {
           localStorage.removeItem('loggedInUserName');
           localStorage.setItem('loggedInUserName', '');
           window.location.href = '/login';
       };
-
-
 }]);
