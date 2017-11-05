@@ -4,10 +4,10 @@ angular.module('myApp')
 
     $scope.projectId = localStorage.getItem('currentProject');
 
-    ProjectService.getProjectById()
+    ProjectService.getProjectById(id)
     .then(function (project) {
+      console.log(project);
       $scope.project = {
-
 
       };
     });

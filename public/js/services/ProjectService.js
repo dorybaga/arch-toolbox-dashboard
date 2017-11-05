@@ -8,7 +8,7 @@ angular.module('myApp')
         });
       },
        getProjectById: function (id) {
-        return $http.get('/api/projects/', id)
+        return $http.get('/api/projects/' + id)
         .then(function (project) {
           console.log(project.data);
           return project.data;

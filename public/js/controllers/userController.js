@@ -8,14 +8,14 @@ angular.module('myApp')
         user_role:''
       };
 
-      $scope.createUser = function() {
+      $scope.createUser = function () {
         newUser ={
           firstName:$scope.user.firstName,
           lastName:$scope.user.lastName,
           email:$scope.user.email,
           password:$scope.user.password,
           user_role:$scope.user.user_role,
-          project_id: "1"
+          project_id:$scope.user.project_id
         };
 
         UserService.createUser(newUser)

@@ -115,7 +115,7 @@ router.post('/projects/:id/schematics', upload.single('image'), (req, res) => {
       });
       console.log('signed url', url);
       newImageUpload(data.Location);
-      res.redirect('/upload');
+      res.redirect('/home');
     }
       return Schematics.create({
         image_url: data.Location,

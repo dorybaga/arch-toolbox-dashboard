@@ -41,7 +41,7 @@ angular.module('myApp')
           $scope.project.job_number = '';
           $scope.project.client_name = '';
           $scope.project.creator = '';
-          window.location.href = '/projects/{{currentProject}}/schematics';
+          window.location.href = '/home';
         });
       };
 }]);

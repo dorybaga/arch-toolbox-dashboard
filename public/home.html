@@ -1,9 +1,9 @@
 <h1>Projects</h1>
 <br>
-<div class="message is-primary is-small"  ng-repeat = "project in projects | orderBy:'time':true">
+<div class="message is-primary is-small"  ng-repeat="project in projects | orderBy:'time':true">
   <ul>
 
-  <li><a ng-href="/projects/{{project.project.id}}" ng-click="setProjectId(project.project.id)">{{project.project.title}}</a>
+  <li><a ng-href="/projects/{{project.project.id}}/schematics" ng-click="setProjectId(project.project.id)">{{project.project.title}}</a>
   </li>
   <li>
     Client: {{project.project.client_name}}

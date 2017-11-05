@@ -3,16 +3,8 @@ angular.module('myApp')
   'HomeController', ['$scope', 'ProjectService', function ($scope, ProjectService) {
     $scope.projects = [];
 
-    // function filterProject () {
 
-    //   return $scope.projects.filter((project) => {
-
-    //     return project.id === $scope.currentProject;
-
-    //   });
-    // }
-
-    // $scope.oneProject = filterProject();
+    $scope.project_id = localStorage.getItem('currentProject');
 
     ProjectService.getProjects()
     .then(function (projects) {
@@ -23,8 +15,8 @@ angular.module('myApp')
       localStorage.removeItem('currentProject');
       localStorage.setItem('currentProject', id);
 
-      var result = localStorage.getItem('currentProject');
-      console.log(result);
+      $scope.result = localStorage.getItem('currentProject');
+
     };
 
   }]);
