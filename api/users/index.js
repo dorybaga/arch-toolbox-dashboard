@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { Comments, Images, Pins, Projects, Schematics, Users } = require('../../models');
-
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
@@ -9,7 +8,6 @@ const bcrypt = require('bcrypt');
 
 const saltRound = 10;
 
-// Create/add new user to database
 router.route('/users')
   .post( (req, res) => {
     bcrypt.genSalt(saltRound)
@@ -84,21 +82,11 @@ router.post('/login', (req, res) => {
   });
 });
 
-// Check if user is valid
-function userAuthenticated (req, res, next) {
-  if (req.isAuthenticated()) {
-    console.log('User is good');
-    next();
-  } else {
-    console.log('User not good');
-    res.redirect('/user');
-  }
-}
 
-// router.route('/login')
+// router.route('/')
 //   .post(passport.authenticate('local', {
-//     successRedirect: '/new',
-//     failureRedirect: '/create'
+//     successRedirect: '/home',
+//     failureRedirect: '/create-user'
 //   }));
 
 

@@ -1,6 +1,6 @@
 
 angular.module('myApp')
-  .controller('CreateProjectController', ['$scope' , '$window', 'CreateProjectService', function($scope, $window, CreateProjectService) {
+  .controller('CreateProjectController', ['$scope' , '$window', 'ProjectService', function($scope, $window, ProjectService) {
 
       $scope.project = {
             title:'',
@@ -10,24 +10,18 @@ angular.module('myApp')
             creator:''
           };
 
-
-
       $scope.currentProjectId = localStorage.getItem('currentProject');
 
       $scope.currentProjectData = '';
 
       $scope.projectById = function(){
-        CreateProjectService.getProjectById($scope.currentProject)
+        ProjectService.getProjectById($scope.currentProject)
         .then(project => {
             var data = project.data;
             console.log(project);
             $scope.currentProjectData = data;
         });
       };
-
-
-
-
 
       $scope.createProject = function(){
         newProject ={
@@ -38,9 +32,7 @@ angular.module('myApp')
           creator:$scope.project.creator,
         };
 
-
-
-        CreateProjectService.createNewProject(newProject)
+        ProjectService.createNewProject(newProject)
         .then(project => {
           localStorage.removeItem('currentProject');
           localStorage.setItem('currentProject', project.data.id);
@@ -49,7 +41,7 @@ angular.module('myApp')
           $scope.project.job_number = '';
           $scope.project.client_name = '';
           $scope.project.creator = '';
-          window.location.href = '/dashboard';
+          window.location.href = '/home';
         });
       };
 }]);

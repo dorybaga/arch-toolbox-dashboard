@@ -1,14 +1,14 @@
-<h1>HELLO WORLD</h1>
+<h1>Projects</h1>
 <br>
-<br>
-<a class="button is-right fa fa-plus " ng-href="/create-project"></a>
-<article class="message is-primary is-small"  ng-repeat = "project in projects | orderBy:'time':true">
-  <div class="message-header">
-    <p> Created by: {{project.creator}}</p>
-  </div>
-  <div class="message-body" >
-    {{project.body}}
-  </div>
-</article>
+<div class="message is-primary is-small"  ng-repeat="project in projects | orderBy:'time':true">
+  <ul>
 
-<!-- <br>{{project.createdAt| date: "EEE, MMM d, y h:mm:ss a" }} -->
+  <li><a ng-href="/projects/{{project.project.id}}/schematics" ng-click="setProjectId(project.project.id)">{{project.project.title}}</a>
+  </li>
+  <li>
+    Client: {{project.project.client_name}}
+  </li>
+
+  </ul>
+
+</div>

@@ -1,16 +1,22 @@
-
 angular.module('myApp')
-  .controller('HomeController', ['$scope' , '$window', 'HomeService', function($scope, $window, HomeService) {
-$scope.projects = [
-  {creator: "scott", body: "jdhsafljkgjdf"},
-  {creator: "luke", body: "jdhsafljkgjdf"},
-  {creator: "dory", body: "jdhsafljkgjdf"},
-  {creator: "josh", body: "jdhsafljkgjdf"},
-  {creator: "heather", body: "jdhsafljkgjdf"},
-  {creator: "niya", body: "jdhsafljkgjdf"},
-  {creator: "frisbee", body: "jdhsafljkgjdf"},
-  {creator: "luke", body: "jdhsafljkgjdf"}
-];
+.controller(
+  'HomeController', ['$scope', 'ProjectService', function ($scope, ProjectService) {
+    $scope.projects = [];
 
 
-}]);
+    $scope.project_id = localStorage.getItem('currentProject');
+
+    ProjectService.getProjects()
+    .then(function (projects) {
+      $scope.projects = projects;
+    });
+
+    $scope.setProjectId = function (id) {
+      localStorage.removeItem('currentProject');
+      localStorage.setItem('currentProject', id);
+
+      $scope.result = localStorage.getItem('currentProject');
+
+    };
+
+  }]);

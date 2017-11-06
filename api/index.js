@@ -9,4 +9,15 @@ router.use('/', desktopRouter);
 router.use('/', mapRouter);
 router.use('/', usersRouter);
 
+// Check if user is valid
+function userAuthenticated (req, res, next) {
+  if (req.isAuthenticated()) {
+    console.log('User is good');
+    next();
+  } else {
+    console.log('User not good');
+    res.redirect('/login');
+  }
+}
+
 module.exports = router;
