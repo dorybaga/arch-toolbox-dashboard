@@ -217,9 +217,11 @@ router.get('/projects/:project_id/pin/:pin_id', (req, res) => {
       }
     ]
   })
-  .then(pin => {
-    function result () {
-      return pin.filter(proj => proj.id === project_id).map(proj => {
+  .then(response => {
+    console.log(response);
+    function result (schematic) {
+      return schematic.filter(proj => proj.id === project_id).map(proj => {
+        console.log(proj);
         var obj = {};
         proj.Schematic.Pins.filter(pin => pin.id === pin_id).map(pin => {
           obj = {
@@ -237,7 +239,7 @@ router.get('/projects/:project_id/pin/:pin_id', (req, res) => {
         return obj;
       });
     }
-    res.json(result());
+    res.json(result(response));
   });
 });
 
@@ -257,16 +259,6 @@ router.put('/projects/comments/:id', (req, res) => {
   });
 });
 
-router.put('/projects/photo/:id', (req, res) => {
-  Images.destroy({
-    where: {
-      id: parseInt(req.params.id)
-    }
-  })
-  .then(data => {
-    console.log('Deleted');
-  });
-});
 
 router.get('/schematics', (req, res) => {
   Schematics.findAll({
@@ -293,19 +285,51 @@ router.post('/pins', (req, res) => {
   });
 });
 
-router.post('/images', (req, res) => {
-  return Images.create({
-    image_url: req.body.image_url,
-    pin_id: parseInt(req.body.pin_id),
-    user_id: parseInt(req.body.user_id)
-  })
-  .then(image => {
-    return res.json(image);
-  })
-  .catch(err => {
-    console.log(err);
+// router.post('/images', (req, res) => {
+//   return Images.create({
+//     image_url: req.body.image_url,
+//     pin_id: parseInt(req.body.pin_id),
+//     user_id: parseInt(req.body.user_id)
+//   })
+//   .then(image => {
+//     return res.json(image);
+//   })
+//   .catch(err => {
+//     console.log(err);
+//   });
+// });
+
+// router.post('/projects/:id/images', upload.single('image'), (req, res) => {
+
+//   fotoBucket.upload(req.file, function (err, data){
+//     if (err) {
+//       console.log(err);
+//       res.send('Something went wrong');
+//     } else {
+//       console.log(data);
+//       var url = s3.getSignedUrl('getObject', {
+//         Bucket: BUCKET_NAME,
+//         Key: data.Key
+//       });
+//       console.log('signed url', url);
+//       newImageUpload(data.Location);
+//       res.redirect('/home');
+//     }
+//       return Images.create({
+//         image_url: data.Location,
+//         pin_id: parseInt(req.params.id),
+//         user_id: parseInt(req.params.id)
+//       });
+//     });
+//   });
+
+router.route('/images')
+  .get( (req, res) => {
+    Images.findAll()
+    .then( (images) => {
+      return res.json(images);
+    });
   });
-});
 
 router.delete('/images/:id', (req, res) => {
   Images.destroy({
