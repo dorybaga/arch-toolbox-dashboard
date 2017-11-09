@@ -1,12 +1,18 @@
-<h1>Projects</h1>
+<h1 class="message is-primary is-large">Projects</h1>
 <br>
-<div class="message is-primary is-small"  ng-repeat="project in projects | orderBy:'time':true">
+<div class="message is-primary is-medium"  ng-repeat="project in projects">
   <ul>
 
   <li><a ng-href="/projects/{{project.project.id}}/schematics" ng-click="setProjectId(project.project.id)">{{project.project.title}}</a>
   </li>
   <li>
-    Client: {{project.project.client_name}}
+    Client: {{ project.project.client_name }}
+  </li>
+  <li>
+    Address: {{ project.project.address }}
+  </li>
+  <li>
+    Created: {{ project.project.createdAt | date : "medium" }}
   </li>
 
   </ul>

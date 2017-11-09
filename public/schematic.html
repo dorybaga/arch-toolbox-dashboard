@@ -1,4 +1,5 @@
 <div ng-controller="UserController">
+  Post Schematic
 <form method="POST" action="{{'/api/projects/' + project_id + '/schematics'}}" enctype="multipart/form-data">
   <input type="file" name="image" accept="image/*">
   <input type="submit">
@@ -6,11 +7,14 @@
 </div>
 <br>
 
+<div ng-controller="UserController">
+  Post Image
+<form method="POST" action="{{'/api/projects/' + project_id + '/images'}}" enctype="multipart/form-data">
+  <input type="file" name="image" accept="image/*">
+  <input type="text" name="pin_id" value="1">
+  <input type="text" name="user_id" value="1">
+  <input type="submit">
+</form>
+</div>
 
-  <div ng-controller="SchematicController">
-    <div>{{ project.title }}</div>
-    <div>Address: {{ project.address }}</div>
-    <div>Created: {{ project.createdAt | date : "medium" }}</div>
-    <div>By: {{ project.creator }}</div>
-  </div>
 

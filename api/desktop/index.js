@@ -141,5 +141,29 @@ router.delete('/projects/:id/schematics/:id', (req, res) => {
   });
 });
 
+router.post('/projects/:id/images', upload.single('image'), (req, res) => {
+  console.log(req.body);
+
+  fotoBucket.upload(req.file, function (err, data){
+    if (err) {
+      console.log(err);
+      res.send('Something went wrong');
+    } else {
+      console.log(data);
+      var url = s3.getSignedUrl('getObject', {
+        Bucket: BUCKET_NAME,
+        Key: data.Key
+      });
+      console.log('signed url', url);
+      res.redirect('/home');
+    }
+      return Images.create({
+        image_url: data.Location,
+        pin_id: parseInt(req.body.pin_id),
+        user_id: parseInt(req.body.user_id)
+      });
+    });
+  });
+
 
 module.exports = router;
