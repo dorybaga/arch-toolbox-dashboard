@@ -9,22 +9,25 @@ angular.module('myApp')
       })
       .when('/create-user', {
         templateUrl: 'createUser.html',
-        controller: 'userController'
+        controller: 'UserController'
+      })
+      .when('/login', {
+        templateUrl: 'login.html',
+        controller: 'UserController'
       })
       .when('/projects/:id/schematics', {
-        templateUrl: 'upload.html',
-        controller: 'userController'
+        templateUrl: 'schematic.html',
+        controller: 'SchematicController'
       })
-      .when('/create-project', {
+      // .when('/projects/:id/schematics', {
+      //   templateUrl: 'upload.html',
+      //   controller: 'UserController'
+      // })
+      .when('/create-project',  {
         templateUrl: 'CreateProject.html',
         controller: 'CreateProjectController'
       })
-      .when('/dashboard', {
-        templateUrl: 'dashboard.html',
-        controller: 'CreateProjectController'
-      })
-      .otherwise({ redirectTo: '/home' });
-
+      .otherwise({ redirectTo: '/login' });
       $locationProvider.html5Mode(true);
   }])
   .run();

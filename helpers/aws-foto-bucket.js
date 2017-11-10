@@ -5,7 +5,7 @@ AWS.config.loadFromPath('config/aws-config.json');
 
 var fotoBucket = new AWS.S3( { params: { Bucket: BUCKET_NAME } } );
 
-function uploadToS3(file, callback) {
+function uploadToS3 (file, callback) {
   console.log(file);
   fotoBucket
     .upload({
