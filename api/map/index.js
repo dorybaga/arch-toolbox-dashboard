@@ -10,8 +10,6 @@ const {
 } = require("../../models");
 const http = require("http");
 const url = require("url");
-const multer = require("multer");
-const upload = multer();
 const PORT = process.env.PORT || 3000;
 
 router.get("/projects", (req, res) => {
@@ -295,29 +293,6 @@ router.post("/pins", (req, res) => {
 //     console.log(err);
 //   });
 // });
-
-router.post("/projects/:id/images", upload.single("image"), (req, res) => {
-  fotoBucket.upload(req.file, function(err, data) {
-    if (err) {
-      console.log(err);
-      res.send("Something went wrong");
-    } else {
-      console.log(data);
-      var url = s3.getSignedUrl("getObject", {
-        Bucket: BUCKET_NAME,
-        Key: data.Key
-      });
-      console.log("signed url", url);
-      newImageUpload(data.Location);
-      res.redirect("/home");
-    }
-    return Images.create({
-      image_url: data.Location,
-      pin_id: parseInt(req.params.id),
-      user_id: parseInt(req.params.id)
-    });
-  });
-});
 
 router.route("/images").get((req, res) => {
   Images.findAll().then(images => {
