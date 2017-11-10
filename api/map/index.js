@@ -1,18 +1,23 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { Comments, Images, Pins, Projects, Schematics, Users } = require('../../models');
-const http = require('http');
-const url = require('url');
-const multer = require('multer');
-const WebSocket = require('ws');
+const {
+  Comments,
+  Images,
+  Pins,
+  Projects,
+  Schematics,
+  Users
+} = require("../../models");
+const http = require("http");
+const url = require("url");
+const multer = require("multer");
+const upload = multer();
 const PORT = process.env.PORT || 3000;
 
-
-router.get('/projects', (req, res) => {
+router.get("/projects", (req, res) => {
   var id = parseInt(req.params.id);
-  Projects.findAll()
-  .then(project => {
-    function result () {
+  Projects.findAll().then(project => {
+    function result() {
       return project.map(proj => {
         return {
           project: {
@@ -32,31 +37,29 @@ router.get('/projects', (req, res) => {
   });
 });
 
-router.delete('/projects/:id', (req, res) => {
+router.delete("/projects/:id", (req, res) => {
   Projects.destroy({
     where: {
       id: parseInt(req.params.id)
     }
-  })
-  .then(data => {
-    console.log('Deleted');
-    res.redirect('/');
+  }).then(data => {
+    console.log("Deleted");
+    res.redirect("/");
   });
 });
 
-router.delete('/pin/:id', (req, res) => {
+router.delete("/pin/:id", (req, res) => {
   Pins.destroy({
     where: {
       id: parseInt(req.params.id)
     }
-  })
-  .then(data => {
-    console.log('Deleted');
-    res.redirect('/');
+  }).then(data => {
+    console.log("Deleted");
+    res.redirect("/");
   });
 });
 
-router.get('/projects/:id', (req, res) => {
+router.get("/projects/:id", (req, res) => {
   var id = parseInt(req.params.id);
   Projects.findAll({
     include: [
@@ -74,8 +77,7 @@ router.get('/projects/:id', (req, res) => {
         ]
       }
     ]
-  })
-  .then(project => {
+  }).then(project => {
     function result() {
       return project.filter(proj => proj.id === id).map(proj => {
         var final = {};
@@ -163,8 +165,7 @@ router.get('/projects/:id', (req, res) => {
   });
 });
 
-
-router.get('/projects/:project_id/comments', (req, res) => {
+router.get("/projects/:project_id/comments", (req, res) => {
   var project_id = parseInt(req.params.project_id);
   var pin_id = parseInt(req.params.pin_id);
   Projects.findAll({
@@ -179,9 +180,8 @@ router.get('/projects/:project_id/comments', (req, res) => {
         ]
       }
     ]
-  })
-  .then(pin => {
-    function result () {
+  }).then(pin => {
+    function result() {
       return pin.filter(proj => proj.id === project_id).map(proj => {
         var obj = {};
         proj.Schematic.Pins.map(pin => {
@@ -197,7 +197,7 @@ router.get('/projects/:project_id/comments', (req, res) => {
   });
 });
 
-router.get('/projects/:project_id/pin/:pin_id', (req, res) => {
+router.get("/projects/:project_id/pin/:pin_id", (req, res) => {
   var project_id = parseInt(req.params.project_id);
   var pin_id = parseInt(req.params.pin_id);
   Projects.findAll({
@@ -216,10 +216,9 @@ router.get('/projects/:project_id/pin/:pin_id', (req, res) => {
         ]
       }
     ]
-  })
-  .then(response => {
+  }).then(response => {
     console.log(response);
-    function result (schematic) {
+    function result(schematic) {
       return schematic.filter(proj => proj.id === project_id).map(proj => {
         console.log(proj);
         var obj = {};
@@ -243,7 +242,7 @@ router.get('/projects/:project_id/pin/:pin_id', (req, res) => {
   });
 });
 
-router.put('/projects/comments/:id', (req, res) => {
+router.put("/projects/comments/:id", (req, res) => {
   Comments.update(
     {
       body: req.body.body
@@ -253,14 +252,12 @@ router.put('/projects/comments/:id', (req, res) => {
         id: parseInt(req.params.id)
       }
     }
-  )
-  .then(data => {
-    console.log('complete');
+  ).then(data => {
+    console.log("complete");
   });
 });
 
-
-router.get('/schematics', (req, res) => {
+router.get("/schematics", (req, res) => {
   Schematics.findAll({
     include: [{ model: Pins }]
   }).then(schematic => {
@@ -268,7 +265,7 @@ router.get('/schematics', (req, res) => {
   });
 });
 
-router.post('/pins', (req, res) => {
+router.post("/pins", (req, res) => {
   return Pins.create({
     x: parseInt(req.body.x),
     y: parseInt(req.body.y),
@@ -277,12 +274,12 @@ router.post('/pins', (req, res) => {
     schematic_id: parseInt(req.body.schematic_id),
     project_id: parseInt(req.body.project_id)
   })
-  .then(pin => {
-    return res.json(pin);
-  })
-  .catch(err => {
-    console.log('Invalid Pin', { errror: err });
-  });
+    .then(pin => {
+      return res.json(pin);
+    })
+    .catch(err => {
+      console.log("Invalid Pin", { errror: err });
+    });
 });
 
 // router.post('/images', (req, res) => {
@@ -299,53 +296,50 @@ router.post('/pins', (req, res) => {
 //   });
 // });
 
-// router.post('/projects/:id/images', upload.single('image'), (req, res) => {
-
-//   fotoBucket.upload(req.file, function (err, data){
-//     if (err) {
-//       console.log(err);
-//       res.send('Something went wrong');
-//     } else {
-//       console.log(data);
-//       var url = s3.getSignedUrl('getObject', {
-//         Bucket: BUCKET_NAME,
-//         Key: data.Key
-//       });
-//       console.log('signed url', url);
-//       newImageUpload(data.Location);
-//       res.redirect('/home');
-//     }
-//       return Images.create({
-//         image_url: data.Location,
-//         pin_id: parseInt(req.params.id),
-//         user_id: parseInt(req.params.id)
-//       });
-//     });
-//   });
-
-router.route('/images')
-  .get( (req, res) => {
-    Images.findAll()
-    .then( (images) => {
-      return res.json(images);
+router.post("/projects/:id/images", upload.single("image"), (req, res) => {
+  fotoBucket.upload(req.file, function(err, data) {
+    if (err) {
+      console.log(err);
+      res.send("Something went wrong");
+    } else {
+      console.log(data);
+      var url = s3.getSignedUrl("getObject", {
+        Bucket: BUCKET_NAME,
+        Key: data.Key
+      });
+      console.log("signed url", url);
+      newImageUpload(data.Location);
+      res.redirect("/home");
+    }
+    return Images.create({
+      image_url: data.Location,
+      pin_id: parseInt(req.params.id),
+      user_id: parseInt(req.params.id)
     });
   });
+});
 
-router.delete('/images/:id', (req, res) => {
+router.route("/images").get((req, res) => {
+  Images.findAll().then(images => {
+    return res.json(images);
+  });
+});
+
+router.delete("/images/:id", (req, res) => {
   Images.destroy({
     where: {
       id: req.params.id
     }
   })
-  .then(data => {
-    console.log('Deleted Image');
-  })
-  .catch(err => {
-    console.log(err);
-  });
+    .then(data => {
+      console.log("Deleted Image");
+    })
+    .catch(err => {
+      console.log(err);
+    });
 });
 
-router.post('/comments', (req, res) => {
+router.post("/comments", (req, res) => {
   return Comments.create({
     body: req.body.body,
     pin_id: parseInt(req.body.pin_id),
@@ -359,20 +353,19 @@ router.post('/comments', (req, res) => {
     });
 });
 
-router.delete('/comments/:id', (req, res) => {
+router.delete("/comments/:id", (req, res) => {
   Comments.destroy({
     where: {
       id: req.params.id
     }
   })
     .then(data => {
-      console.log('Deleted Comment');
+      console.log("Deleted Comment");
       res.end();
     })
     .catch(err => {
       console.log(err);
     });
 });
-
 
 module.exports = router;
