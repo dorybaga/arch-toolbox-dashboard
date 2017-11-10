@@ -70,7 +70,7 @@ router.route('/users/:id')
     });
   });
 
-router.post('http://mobile.fieldmarkapp.com/api/login', (req, res) => {
+router.post('/login', (req, res) => {
   return Users.findOne({ where: { email: req.body.email } })
   .then( (user) => {
     if (!user) {
