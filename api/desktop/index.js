@@ -22,6 +22,7 @@ const fotoBucket = require("../../helpers/aws-foto-bucket.js");
 const app = express();
 const upload = multer();
 
+
 const server = http.createServer(app);
 app.use(express.static(__dirname + "/public"));
 
