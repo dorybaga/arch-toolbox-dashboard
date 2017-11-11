@@ -89,8 +89,7 @@ router.post("/projects/:id/schematics", upload.single("image"), (req, res) => {
         Key: data.Key
       });
       console.log("signed url", url);
-      newImageUpload(data.Location);
-      res.json({ statusCode: 200, message: "schematic uploaded" });
+      res.redirect("/home");
     }
     return Schematics.create({
       image_url: data.Location,
